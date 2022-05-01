@@ -1,17 +1,11 @@
-import error_send
 import discord
-import re
+import error_send
 import sqlite3
 import os
-import json
-import time
-import random
 from discord.ext import commands
-from pymongo import MongoClient
 from loguru import logger
+from discord_components import DiscordComponents
 from config import config
-
-#logger.add("logs/log_{time}.log", format="{level} -> {message} at {time}", level="INFO", rotation="2 MB",compression="zip")
 
 
 def get_prefix(client, message):
@@ -22,7 +16,7 @@ def get_prefix(client, message):
     else:
         return result[1]
 
-bot = commands.Bot(command_prefix=get_prefix)
+bot = commands.Bot(command_prefix=get_prefix, intents=discord.Intents.all())
 bot.remove_command('help')
 connection = sqlite3.connect("database.db", timeout=10)
 cursor = connection.cursor()
@@ -32,6 +26,7 @@ bot.logger = logger
 @bot.event
 async def on_ready():
     logger.info(f"Hi, {config.DEVELOPER}!")
+    DiscordComponents(bot)
     await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.playing, name=f"+хелп || +инвайт"))
 
 @bot.command
@@ -48,15 +43,13 @@ async def on_guild_join(guild):
 
         if to_send:
             embed = discord.Embed(color=config.EMBED_COLOR, description = config.JOIN_MSG) 
-            embed.set_image(url = 'https://i.yapx.ru/Qa220.png')
             await  to_send.send(embed=embed)
 
 for folder in os.listdir("cogs"):
     for file in os.listdir(f"cogs/{folder}"):
         if file.endswith(".py") and file.startswith("COG_"):
             bot.load_extension(f"cogs.{folder}.{file[:-3]}") 
-            logger.info(f"import \"F:\Yalfer\Yalfer 2.4\cogs/{folder}/{file}\"")
-
+            logger.info(f"import \"D:\Yalfer\Yalfer 2.5\cogs/{folder}/{file}\"")
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -102,71 +95,21 @@ async def on_command_error(ctx, error):
         return
     if str(error) == "Command raised an exception: SyntaxError: invalid syntax (<string>, line 1)":
         return
-    if str(error) == "Command raised an exception: SyntaxError: unexpected EOF while parsing (<string>, line 0)":
+    if str(error) == "Command raised an exception: AttributeError: <discord.embeds.Embed object at 0x000001EC2E81A440>":
         return
     if str(error) == "returnCommand raised an exception: AttributeError: 'MiningCog' object has no attribute 'get_prefix'":
         return
-    if str(error) == "Command raised an exception: FileNotFoundError: [Errno 2] No such file or directory: '.\assets\videocards.png'":
+    if str(error) == "Command raised an exception: HTTPException: 400 Bad Request (error code: 50035): Invalid Form Body In message_reference: Unknown message":
         return
     if str(error) == "Command raised an exception: TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'":
         return
     if str(error) == "Command raised an exception: NotFound: 404 Not Found (error code: 10008): Unknown Message":
         return
-    if str(error) == "Command raised an exception: AttributeError: 'NoneType' object has no attribute 'is_paused'":
-        return
-    if str(error) == "Command raised an exception: TypeError: expected string or bytes-like object":
-        return
     if str(error) == "Command raised an exception: OverflowError: Python int too large to convert to SQLite INTEGER":
         await error_send.send_error(ctx, "Слишком большое значение!")
         return
     emb = discord.Embed(color=config.EMBED_COLOR_ERROR, description = f':no_entry_sign: {error}')
-    await ctx.reply(embed = emb)
-
-'''
-@bot.event
-async def on_message(msg):
-    if msg.author == bot.user:
-        return
-    guild_id = msg.guild.id
-    prefix = get_prefix(bot, msg)
-    test = config.TEST
-    cursor.execute(
-        "SELECT * FROM log_channel WHERE guild_id = ?",
-        (
-            guild_id,
-        )
-    )
-    result = cursor.fetchone()
-    guild_id = msg.guild.id
-    prefix = get_prefix(bot, msg)
-    cursor.execute(
-        "SELECT * FROM log_channel WHERE guild_id = ?",
-        (
-            guild_id,
-        )
-    )
-
-    result = cursor.fetchone()
-    amount_of_big_letters = 0
-    REGEX_EN = re.compile(r"[A-Z]")
-    REGEX_RU = re.compile(r"[А-Я]")
-    amount_of_big_letters += len(REGEX_EN.findall(msg.content))
-    amount_of_big_letters += len(REGEX_RU.findall(msg.content))
-    if amount_of_big_letters > 5 and msg.author != bot.user:
-        if result is not None:
-            channel = discord.utils.get(msg.guild.channels, id=int(result[1]))
-            embed = discord.Embed(title=f":no_entry: Caps Lock!", color=config.EMBED_COLOR_LOG, description=f"{msg.author.mention} использовал очень много капса:", inline = False)
-            embed.add_field(name= f"Сообщение: `{msg.content}`", value=f"Количество больших букв: `{amount_of_big_letters}`\nКанал: `#{msg.channel.name}`")
-            embed.add_field(name= f"ID сообщения: `{msg.id}`", value=f"Ссылка: {msg.jump_url}", inline = False)
-            embed.set_thumbnail(
-                url=msg.author.avatar_url
-            )
-            try:
-                await channel.send(embed=embed)
-            except:
-                embed = discord.Embed(title=f":no_entry: Логи выключены!", color=config.EMBED_COLOR_ERROR, description=f"Администрация может включить систему логирования по команде {prefix}лог <#канал>")
-                await msg.channel.send(embed=embed)   
-'''
+    await ctx.send(embed = emb)
 
 #Запуск-----------------------------------
 token = open ('token.txt', 'r').readline()

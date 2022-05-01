@@ -269,6 +269,11 @@ class MiningCog(commands.Cog):
             emb = discord.Embed(color=config.EMBED_COLOR, description = f'{member.mention} лишился `{videocard}`!')
             await ctx.send(embed = emb)
 
+    @staticmethod
+    def __log__(messege : str):
+        with open("hren.txt", "a") as ivan:
+            ivan.write(str(messege))
+
     @commands.has_permissions(administrator=True)
     @commands.command(aliases = ['Мвыдать', 'мвыдать'])
     async def m_get(self, ctx, member: discord.Member, *videocard_words):
@@ -287,7 +292,9 @@ class MiningCog(commands.Cog):
             )
         )
         result = self.cursor.fetchall()
+        self.__log__(result)
         videocard = " ".join(videocard_words)
+        self.__log__(videocard)
         if not (videocard in list(self.prises.keys())):
             emb = discord.Embed(colour=config.EMBED_COLOR_ERROR, description = 'Такой видеокарты `не существует`!')
             emb.set_footer(text=f"❓ Узнать списки видеокарт можно по команде  {prefix}млист")

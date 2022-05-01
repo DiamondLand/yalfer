@@ -29,10 +29,6 @@ async def on_ready():
     DiscordComponents(bot)
     await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.playing, name=f"+хелп || +инвайт"))
 
-@bot.command
-async def guilds(ctx):
-    await ctx.send("\n".join(bot.guilds))
-
 
 @bot.event
 async def on_guild_join(guild):
@@ -49,7 +45,7 @@ for folder in os.listdir("cogs"):
     for file in os.listdir(f"cogs/{folder}"):
         if file.endswith(".py") and file.startswith("COG_"):
             bot.load_extension(f"cogs.{folder}.{file[:-3]}") 
-            logger.info(f"import \"F:\Yalfer\Yalfer 3.0\cogs/{folder}/{file}\"")
+            logger.info(f"import \"D:\Yalfer\Yalfer 3.0\cogs/{folder}/{file}\"")
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -102,6 +98,8 @@ async def on_command_error(ctx, error):
     if str(error) == "Command raised an exception: HTTPException: 400 Bad Request (error code: 50035): Invalid Form Body In message_reference: Unknown message":
         return
     if str(error) == "Command raised an exception: TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'":
+        return
+    if str(error) == "Command raised an exception: HTTPException: 400 Bad Request (error code: 40060): Interaction has already been acknowledged.":
         return
     if str(error) == "Command raised an exception: NotFound: 404 Not Found (error code: 10008): Unknown Message":
         return
