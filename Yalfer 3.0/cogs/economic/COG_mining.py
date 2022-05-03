@@ -89,29 +89,51 @@ class MiningCog(commands.Cog):
             )
         ],)
 
-        emb1 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 3090', description = 'Цена видеокарты: `100.000.000`\nВероятность поломки: `12%`\nОценка: `5/5`')
-        emb2 = discord.Embed(colour=config.EMBED_COLOR, title = '6900 xt', description = 'Цена видеокарты: `20.000.000`\nВероятность поломки: `13%`\nОценка: `5/5`')
-        emb3 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 3080', description = 'Цена видеокарты: `10.000.000`\nВероятность поломки: `8%`\nОценка: `5/5`')
-        emb4 = discord.Embed(colour=config.EMBED_COLOR, title = '6800 xt', description = 'Цена видеокарты: `5.000.000`\nВероятность поломки: `17%`\nОценка: `4.5/5`')
-        emb5 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 3070', description = 'Цена видеокарты: `4.000.000`\nВероятность поломки: `20%`\nОценка: `4.2/5`')
-        emb6 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 2080 ti', description = 'Цена видеокарты: `3.500.000`\nВероятность поломки: `9%`\nОценка: `4.2/5`')
-        emb7 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx a6000', description = 'Цена видеокарты: `2.500.000`\nВероятность поломки: `11%`\nОценка: `5/5`')
-        emb8 = discord.Embed(colour=config.EMBED_COLOR, title = 'rx 6700 xt', description = 'Цена видеокарты: `100.000.000`\nВероятность поломки: `2%`\nОценка: `5/5`')
-        emb9 = discord.Embed(colour=config.EMBED_COLOR, title = 'titan v', description = 'Цена видеокарты: `1.500.000`\nВероятность поломки: `14%`\nОценка: `5/5`')
-        emb10 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 2080', description = 'Цена видеокарты: `1.000.000`\nВероятность поломки: `10%`\nОценка: `3.4/5`')
-        emb11 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 2070', description = 'Цена видеокарты: `700.000`\nВероятность поломки: `18%`\nОценка: `3/5`')
-        emb12 = discord.Embed(colour=config.EMBED_COLOR, title = 'rx 5700', description = 'Цена видеокарты: `500.000`\nВероятность поломки: `47%`\nОценка: `2.5/5`')
-        emb13 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 2060', description = 'Цена видеокарты: `220.000`\nВероятность поломки: `50%`\nОценка: `2.5/5`')
+        embed1 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 3090', description = 'Цена видеокарты: `100.000.000`\nВероятность поломки: `12%`\nОценка: `5/5`')
+        embed2 = discord.Embed(colour=config.EMBED_COLOR, title = '6900 xt', description = 'Цена видеокарты: `20.000.000`\nВероятность поломки: `13%`\nОценка: `5/5`')
+        embed3 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 3080', description = 'Цена видеокарты: `10.000.000`\nВероятность поломки: `8%`\nОценка: `5/5`')
+        embed4 = discord.Embed(colour=config.EMBED_COLOR, title = '6800 xt', description = 'Цена видеокарты: `5.000.000`\nВероятность поломки: `17%`\nОценка: `4.5/5`')
+        embed5 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 3070', description = 'Цена видеокарты: `4.000.000`\nВероятность поломки: `20%`\nОценка: `4.2/5`')
+        embed6 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 2080 ti', description = 'Цена видеокарты: `3.500.000`\nВероятность поломки: `9%`\nОценка: `4.2/5`')
+        embed7 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx a6000', description = 'Цена видеокарты: `2.500.000`\nВероятность поломки: `11%`\nОценка: `5/5`')
+        embed8 = discord.Embed(colour=config.EMBED_COLOR, title = 'rx 6700 xt', description = 'Цена видеокарты: `100.000.000`\nВероятность поломки: `2%`\nОценка: `5/5`')
+        embed9 = discord.Embed(colour=config.EMBED_COLOR, title = 'titan v', description = 'Цена видеокарты: `1.500.000`\nВероятность поломки: `14%`\nОценка: `5/5`')
+        embed10 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 2080', description = 'Цена видеокарты: `1.000.000`\nВероятность поломки: `10%`\nОценка: `3.4/5`')
+        embed11 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 2070', description = 'Цена видеокарты: `700.000`\nВероятность поломки: `18%`\nОценка: `3/5`')
+        embed12 = discord.Embed(colour=config.EMBED_COLOR, title = 'rx 5700', description = 'Цена видеокарты: `500.000`\nВероятность поломки: `47%`\nОценка: `2.5/5`')
+        embed13 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 2060', description = 'Цена видеокарты: `220.000`\nВероятность поломки: `50%`\nОценка: `2.5/5`')
 
         while True:
             try:
                 event = await self.client.wait_for("select_option", check=None)
-                label = event.component[0].label
-
+                label = event.values[0]
                 if label == "rtx 3090":
-                    await event.respond(
-                    ephemeral=True,
-                    embed=emb1)
+                    await event.respond(embed = embed1, ephemeral=True)
+                elif label == "6900 xt":
+                    await event.respond(embed = embed2, ephemeral=True)
+                elif label == "rtx 3080":
+                    await event.respond(embed = embed3, ephemeral=True)
+                elif label == "6800 xt":
+                    await event.respond(embed = embed4, ephemeral=True)
+                elif label == "rtx 3070":
+                    await event.respond(embed = embed5, ephemeral=True)
+                elif label == "rtx 2080 ti":
+                    await event.respond(embed = embed6, ephemeral=True)
+                elif label == "rtx a6000":
+                    await event.respond(embed = embed7, ephemeral=True)
+                elif label == "rx 6700 xt":
+                    await event.respond(embed = embed8, ephemeral=True)
+                elif label == "titan v":
+                    await event.respond(embed = embed9, ephemeral=True)
+                elif label == "rtx 2080":
+                    await event.respond(embed = embed10, ephemeral=True)
+                elif label == "rtx 2070":
+                    await event.respond(embed = embed11, ephemeral=True)
+                elif label == "rx 5700":
+                    await event.respond(embed = embed12, ephemeral=True)
+                elif label == "rtx 2060":
+                    await event.respond(embed = embed13, ephemeral=True)   
+                
             except discord.NotFound:
                 print("error.")
 
@@ -150,7 +172,7 @@ class MiningCog(commands.Cog):
                 await ctx.send(embed = emb)
             else:
                 for element in result:
-                    if element[3] >= 10:
+                    if element[3] > 10:
                         emb = discord.Embed(colour=config.EMBED_COLOR_ERROR, description = 'Лимит доступных к покупке видеокарт - `10`!')
                         await ctx.send(embed = emb, delete_after=15)
                     else:
@@ -271,7 +293,7 @@ class MiningCog(commands.Cog):
 
     @staticmethod
     def __log__(messege : str):
-        with open("hren.txt", "a") as ivan:
+        with open("error_mining.txt", "a") as ivan:
             ivan.write(str(messege))
 
     @commands.has_permissions(administrator=True)
@@ -279,16 +301,12 @@ class MiningCog(commands.Cog):
     async def m_get(self, ctx, member: discord.Member, *videocard_words):
         prefix = self.get_prefix(self.cursor, ctx.message)
         member = member or ctx.author
-        """
-        :param ctx:
-        :param member:
-        :return:
-        """
         self.cursor.execute(
+            
             "SELECT * FROM graphics_cards WHERE guild_id = ? AND member_id = ?",
             (
                 ctx.guild.id,
-                member.id
+                member
             )
         )
         result = self.cursor.fetchall()
@@ -300,17 +318,17 @@ class MiningCog(commands.Cog):
             emb.set_footer(text=f"❓ Узнать списки видеокарт можно по команде  {prefix}млист")
             await ctx.send(embed = emb, delete_after=15)
         else:
-            for element in result:
-                if element[3] >= 10:
-                    await ctx.channel.purge(limit=1)
-                    emb = discord.Embed(colour=config.EMBED_COLOR_ERROR, description = 'Лимит доступных видеокарт - `10`!')
-                    await ctx.send(embed = emb, delete_after=15)
-                else:
+            #for element in result:
+                #if element[3] > 10:
+                    #await ctx.channel.purge(limit=1)
+                    #emb = discord.Embed(colour=config.EMBED_COLOR_ERROR, description = 'Лимит доступных видеокарт - `10`!')
+                    #await ctx.send(embed = emb, delete_after=15)
+                #else:
                     MiningCogFunctionality.add_videocard(
-                            videocard,
-                            1,
                             ctx.guild,
                             member,
+                            videocard,
+                            1,
                             self.cursor,
                             self.connection,
                     )

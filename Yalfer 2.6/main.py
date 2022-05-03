@@ -29,6 +29,10 @@ async def on_ready():
     DiscordComponents(bot)
     await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.playing, name=f"+хелп || +инвайт"))
 
+@bot.command
+async def guilds(ctx):
+    await ctx.send("\n".join(bot.guilds))
+
 
 @bot.event
 async def on_guild_join(guild):
@@ -45,7 +49,7 @@ for folder in os.listdir("cogs"):
     for file in os.listdir(f"cogs/{folder}"):
         if file.endswith(".py") and file.startswith("COG_"):
             bot.load_extension(f"cogs.{folder}.{file[:-3]}") 
-            logger.info(f"import \"D:\Yalfer\Yalfer 3.0\cogs/{folder}/{file}\"")
+            logger.info(f"import \"D:\Yalfer\Yalfer 2.5\cogs/{folder}/{file}\"")
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -87,11 +91,7 @@ async def on_command_error(ctx, error):
         return
     if str(error) == "Command raised an exception: SyntaxError: unexpected EOF while parsing (<string>, line 1)": 
         return 
-    if str(error) == "Command raised an exception: HTTPException: 400 Bad Request (error code: 50035): Invalid Form Body In message_reference: Unknown message": 
-        return 
-    if str(error) == "Command raised an exception: NotFound: 404 Not Found (error code: 0): Interaction is unknown (you have already responded to the interaction or responding took too long)": 
-        return 
-    if str(error) == "Command raised an exception: TypeError: argument of type 'NoneType' is not iterable": 
+    if str(error) == "Command raised an exception: AttributeError: 'MiningCog' object has no attribute 'conn'": 
         return
     if str(error) == "Command raised an exception: SyntaxError: invalid syntax (<string>, line 1)":
         return
