@@ -836,7 +836,7 @@ class EconomyCog(commands.Cog):
                             await EconomicCogFunctionality.send_balance_info(ctx, user, data)
 
 #<<казино-------->>
-    @commands.command(aliases=["Казино", 'Ставка', 'ставка'])
+    @commands.command(aliases=['Казино', 'Ставка', 'ставка'])
     @commands.cooldown(2, 13, commands.BucketType.member)
     async def казино(self, ctx, balance: int):
         user_data = EconomicCogFunctionality.get_user_data(
@@ -1014,31 +1014,48 @@ class EconomyCog(commands.Cog):
                             )
                             await EconomicCogFunctionality.send_balance_info(ctx, user, data)
 
-#<<вмагаз------->>
+
     @commands.has_permissions(administrator=True)
-    @commands.command(aliases = ['вмагазин', 'Вмагазин', 'Вмагаз'])
-    async def вмагаз(self, ctx, role: discord.Role, prise: int):
+    @commands.command(aliases = ['вмагазин', 'Вмагазин', 'Вмазаг', 'вмагаз'])
+    async def add_shop_item(self, ctx, role: discord.Role, prise: int):
+        await ctx.channel.purge(limit=1)
+        """
+        :param ctx:
+        :param role:
+        :param prise:
+        :return:
+        """
         if int(prise) <= 0:
             await ctx.channel.purge(limit=1)
             emb = discord.Embed(colour=config.EMBED_COLOR_ERROR, description = 'Так не получится...')
             await ctx.send(embed = emb, delete_after=20)
-        else:
-            self.cursor.execute(
-                "INSERT INTO economic_shop_item VALUES(?, ?, ?)",
-                (
-                    ctx.guild.id,
-                    role.id,
-                    prise
-                )
-            )
-            self.conn.commit()
-            emb = discord.Embed(color = config.EMBED_COLOR, description = f'{role.mention} успешно добавлена в магизин сервера!')
-            await ctx.send(embed = emb)
 
-#<<измагаза------>>
+            if int(prise) > 100000000000000000:
+                await ctx.channel.purge(limit=1)
+                emb = discord.Embed(colour=config.EMBED_COLOR_ERROR, description = 'Превышен лимит: `100000000000000000`')
+                await ctx.send(embed = emb, delete_after=20)
+            else:
+                self.cursor.execute(
+                    "INSERT INTO economic_shop_item VALUES(?, ?, ?)",
+                    (
+                        ctx.guild.id,
+                        role.id,
+                        prise
+                    )
+                )
+                self.conn.commit()
+                emb = discord.Embed(color = config.EMBED_COLOR, description = f'{role.mention} успешно добавлена в магизин сервера!')
+                await ctx.send(embed = emb)
+
     @commands.has_permissions(administrator=True)
-    @commands.command(aliases = ['Измагазина', 'измагазина', 'Измагаза'])
-    async def измагаза(self, ctx, role: discord.Role):
+    @commands.command(aliases = ['Измагазина', 'измагазина', 'измагаза', 'Измагаза'])
+    async def del_shop_item(self, ctx, role: discord.Role):
+        await ctx.channel.purge(limit=1)
+        """
+        :param ctx:
+        :param role:
+        :return:
+        """
         self.cursor.execute(
             "DELETE FROM economic_shop_item WHERE guild_id = ? AND role_id = ?",
             (
@@ -1050,10 +1067,14 @@ class EconomyCog(commands.Cog):
         emb = discord.Embed(color = config.EMBED_COLOR, description = f'{role.mention} успешно удалена из магазина сервера!')
         await ctx.send(embed = emb)
 
-#<<магаз-------->>
-    @commands.command(aliases = ['Магазин', 'магазин', 'Магаз'])
-    async def магаз(self, ctx):
+    @commands.command(aliases = ['Магазин', 'магазин', 'Магаз', 'магаз'])
+    async def shop(self, ctx):
         prefix = self.get_prefix(self.cursor, ctx.message)
+        await ctx.channel.purge(limit=1)
+        """
+        :param ctx:
+        :return:
+        """
         data = EconomicCogFunctionality.get_all_shop_items(
             self.cursor,
             ctx.guild
@@ -1061,13 +1082,19 @@ class EconomyCog(commands.Cog):
         data.reverse()
         emb = discord.Embed(color = config.EMBED_COLOR, title="Магазин ролей:")
         for item in data:
-            emb.add_field(name='Роль:', value=f"{ctx.guild.get_role(item[1]).mention} - `{item[2]}` бублика", inline=False)
-            emb.set_footer(text = f'❓ Купить {prefix}купить @роль')
+            emb.add_field(name='Роль:', value=f"{ctx.guild.get_role(item[1]).mention} - `{item[2]}`", inline=False)
+            emb.set_footer(text = f'Купить: {prefix}купить <@роль>')
         await ctx.send(embed = emb)
 
-#<<купить-------->>
-    @commands.command(aliases = ['Купить'])
-    async def купить(self, ctx, role: discord.Role):
+
+    @commands.command(aliases = ['Купить', 'купить'])
+    async def buy(self, ctx, role: discord.Role):
+        await ctx.channel.purge(limit=1)
+        """
+        :param ctx:
+        :param role:
+        :return:
+        """
         data = EconomicCogFunctionality.get_all_shop_items(
             self.cursor,
             ctx.guild
@@ -1082,7 +1109,7 @@ class EconomyCog(commands.Cog):
         member = ctx.message.author
         if not role_exists:
             await ctx.channel.purge(limit=1)
-            emb = discord.Embed(color=config.EMBED_COLOR_ERROR, title="Произошла ошибка!", description = "Такой роли `нет в магазине`")
+            emb = discord.Embed(color=config.EMBED_COLOR_ERROR, description = "Такой роли `нет в магазине`")
             await ctx.send(embed = emb, delete_after=20)
         else:
             await ctx.channel.purge(limit=1)
@@ -1103,21 +1130,14 @@ class EconomyCog(commands.Cog):
                 )
                 await ctx.message.author.add_roles(role)
                 emb = discord.Embed(color = config.EMBED_COLOR, description = f'{ctx.message.author.mention}, вы получили {role.mention}!')
-                await ctx.send(embed=emb, components = [
-                Button(style=ButtonStyle.blue, label = "Баланс пользователя", emoji='🏦', custom_id = 'bal')],)
-                response = await self.client.wait_for("button_click", check = lambda message: message.author == ctx.author)
-                if response.channel == ctx.channel:
-                    if lambda message: message.author == ctx.author:
-                        if response.custom_id == "bal":
-                            user = ctx.author
-                            data = EconomicCogFunctionality.get_user_data(
-                                self.cursor,
-                                self.conn,
-                                user,
-                                ctx.guild
-                            )
-                            await EconomicCogFunctionality.send_balance_info(ctx, user, data)
+                await ctx.send(embed = emb)
 
+# setup function
 def setup(client):
+    """
+    :param client:
+    :return:
+    """
     client.add_cog(EconomyCog(client))
+
 
