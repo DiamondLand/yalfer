@@ -2,7 +2,8 @@ CREATE TABLE `economic` (
     `guild_id` INT,
     `member_id` INT,
     `bank_balance` INT,
-    `wallet_balance` INT
+    `wallet_balance` INT,
+    `coin_balance` INT
 );
 
 -- server activity table

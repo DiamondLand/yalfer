@@ -1,22 +1,15 @@
-from ast import alias
 import sqlite3
 import asyncio
 import os
 import sys
 import random
-import time
-from discord.ext.commands.core import command
-from loguru import logger
 import discord
 from discord.ext import commands
-from discord.utils import get
+from discord_components import DiscordComponents, Button, ButtonStyle, Select, SelectOption
 from cogs.economic.system import EconomicCogFunctionality
 from config import config
-
-
-
+#<<------------->>
 class EconomyCog(commands.Cog):
-
     def __init__(self, client):
         self.client = client
         self.conn = sqlite3.connect("database.db")
@@ -34,7 +27,6 @@ class EconomyCog(commands.Cog):
             return result[1]
         else:
             return "+"
-
     #баланс-------------------------------------------------
     @commands.command(aliases = ['Баланс', 'баланс', 'Бал', 'бал'])
     async def bal(self, ctx, user: discord.Member = None):
@@ -408,117 +400,12 @@ class EconomyCog(commands.Cog):
             user_data
         )
 
-    #доктор------------------------------------------------------------------------	
-    @commands.command(aliases = ['Доктор', 'доктор'])
+#<<врач-------->>
+    @commands.command(aliases = ['Доктор', 'доктор', 'Медик', 'медик', 'Врач'])
     @commands.cooldown(1, 10800, commands.BucketType.member)
-    async def doctor(self, ctx, balance = 50000):
-        user_data = EconomicCogFunctionality.get_user_data(
-            self.cursor,
-            self.conn,
-            ctx.message.author,
-            ctx.guild
-        )
-        users_balance = int(
-                user_data[3]
-            )
-        if int(balance) + users_balance > 999999999999999999:
-            return
-        else:
-            await ctx.channel.purge(limit=1)
-            user_data = EconomicCogFunctionality.get_user_data(
-                self.cursor,
-                self.conn,
-                ctx.message.author,
-                ctx.guild
-            )
-            member = ctx.message.author
-            emb = discord.Embed(color = config.EMBED_COLOR, title = 'Работа доктором:', description = f'Вы приходите в операционную и ждёте пациенита...')
-            emb.set_footer(text = 'Ожидайте, пациента уже везут')
-            await member.send(embed = emb, delete_after=15)
-            time.sleep(2)
-            emb = discord.Embed(color = config.EMBED_COLOR, title = 'Пациент прибыл!', description = f'Вы моете руки, надеваете перчатки и готовитесь к операции...')
-            emb.set_footer(text = 'Ожидайте, идёт подготовка к операции')
-            await member.send(embed = emb, delete_after=15)
-            time.sleep(2)
-            emb = discord.Embed(color = config.EMBED_COLOR, title = 'Подготовка завершена!', description = f'Подача наркоза, пациент медлено засыпает...')
-            emb.set_footer(text = 'Ожидайте, идёт операция')
-            await member.send(embed = emb, delete_after=15)
-            time.sleep(3)
-            emb = discord.Embed(color = config.EMBED_COLOR, title = 'Завершение!', description = f'Всё прошло успешно. Пациента увозят в палату...')
-            await member.send(embed = emb, delete_after=15)
-            member = ctx.message.author
-            EconomicCogFunctionality.change_balance(
-                self.cursor,
-                self.conn,
-                ctx.message.author,
-                ctx.guild,
-                balance,
-                user_data
-            )
-            emb = discord.Embed(color = config.EMBED_COLOR, description = f'{member.mention}, вы получили `{balance}`💸 за работу доктором!')
-            emb.set_footer(text = 'Возобновить данную работу можно через 3 часа!')
-            await ctx.send(embed = emb, delete_after = 15)
-            return
-
-
-    #пилот------------------------------------------------------------
-    @commands.command(aliases = ['Пилот', 'пилот'])
-    @commands.cooldown(1, 7200, commands.BucketType.member)
-    async def pilot(self, ctx, balance = 25000):
-        user_data = EconomicCogFunctionality.get_user_data(
-            self.cursor,
-            self.conn,
-            ctx.message.author,
-            ctx.guild
-        )
-        users_balance = int(
-                user_data[3]
-            )
-        if int(balance) + users_balance > 999999999999999999:
-            return
-        else:
-            member = ctx.message.author
-            await ctx.channel.purge(limit=1)
-            user_data = EconomicCogFunctionality.get_user_data(
-                self.cursor,
-                self.conn,
-                ctx.message.author,
-                ctx.guild
-            )
-            emb = discord.Embed(color = config.EMBED_COLOR, title = 'Работа пилотом:', description = f'Вы садитесь в самолёт и проводите ЧЕК перед взлётом...')
-            emb.set_footer(text = 'Ожидайте, выполняется ЧЕК')
-            await member.send(embed = emb, delete_after=15)
-            time.sleep(2)
-            emb = discord.Embed(color = config.EMBED_COLOR, title = 'Сбоев нет!', description = f'Вы выруливаете на ВПП и ждёте добро на взлёт...')
-            emb.set_footer(text = 'Ожидайте добро на взлёт')
-            await member.send(embed = emb, delete_after=15)
-            time.sleep(2)
-            emb = discord.Embed(color = config.EMBED_COLOR, title = 'Добро получено!', description = f'Вы взлетаете. Попутного ветра!')
-            emb.set_footer(text = 'Ожидайте, полёт начался')
-            await member.send(embed = emb, delete_after=15)
-            time.sleep(3)
-            emb = discord.Embed(color = config.EMBED_COLOR, title = 'Посадка!', description = f'Рейс успешно завершён!')
-            await member.send(embed = emb, delete_after = 15)
-
-            member = ctx.message.author
-            EconomicCogFunctionality.change_balance(
-                self.cursor,
-                self.conn,
-                ctx.message.author,
-                ctx.guild,
-                balance,
-                user_data
-            )
-            emb = discord.Embed(color = config.EMBED_COLOR, description = f'{member.mention}, вы получили `{balance}`💸 за работу пилотом!')
-            emb.set_footer(text = 'Возобновить данную работу можно через 2 часа!')
-            await ctx.send(embed = emb, delete_after = 15)
-            return
-
-    #учитель--------------------------------------------------------
-    @commands.command(aliases = ['Учитель', 'учитель'])
-    @commands.cooldown(1, 3600, commands.BucketType.member)
-    async def teacher(self, ctx, balance = 10000):
+    async def врач(self, ctx):
         member = ctx.message.author
+        balance = config.MEDIC
         await ctx.channel.purge(limit=1)
         user_data = EconomicCogFunctionality.get_user_data(
             self.cursor,
@@ -532,21 +419,6 @@ class EconomyCog(commands.Cog):
         if int(balance) + users_balance > 999999999999999999:
             return
         else:
-            emb = discord.Embed(color = config.EMBED_COLOR, title = 'Работа учителем:', description = f'Вы заходите в кабинет директора на планёрку...')
-            emb.set_footer(text = 'Ожидайте, идёт планёрка')
-            await member.send(embed = emb, delete_after=15)
-            time.sleep(2)
-            emb = discord.Embed(color = config.EMBED_COLOR, title = 'Планёрка проведена!', description = f'Вы идёте в кабинет и ждёте начало урока...')
-            emb.set_footer(text = 'Ожидайте, урок скоро начнётся')
-            await member.send(embed = emb, delete_after=15)
-            time.sleep(2)
-            emb = discord.Embed(color = config.EMBED_COLOR, title = 'Звонок на урок!', description = f'Дети заходят в класс, начинаются уроки!')
-            emb.set_footer(text = 'Ожидайте, урок начался')
-            await member.send(embed = emb, delete_after=15)
-            time.sleep(3)
-            emb = discord.Embed(color = config.EMBED_COLOR, title = 'Звонок с урока!', description = f'Все уроки прошли, ваш рабочий день завершён!')
-            await member.send(embed = emb, delete_after=15)
-
             member = ctx.message.author
             EconomicCogFunctionality.change_balance(
                 self.cursor,
@@ -556,12 +428,182 @@ class EconomyCog(commands.Cog):
                 balance,
                 user_data
             )
-            emb = discord.Embed(color = config.EMBED_COLOR, description = f'{member.mention}, вы получили `{balance}`💸 за работу учителем!')
-            emb.set_footer(text = 'Возобновить данную работу можно через 1 час!')
-            await ctx.send(embed = emb, delete_after=15)
-            return
+            emb = discord.Embed(color = config.EMBED_COLOR, description = f'{member.mention}, вы получили `{balance}`💸 за работу доктором!')
+            emb.set_footer(text = 'Возобновить данную работу можно через 3 часа!')
+            await ctx.send(embed=emb)
 
-    #передать-------------------------------------------------------------------
+
+#<<пилот--------->>
+    @commands.command(aliases = ['Пилот'])
+    @commands.cooldown(1, 7200, commands.BucketType.member)
+    async def пилот(self, ctx):
+        member = ctx.message.author
+        balance = config.PILOT
+        await ctx.channel.purge(limit=1)
+        user_data = EconomicCogFunctionality.get_user_data(
+            self.cursor,
+            self.conn,
+            ctx.message.author,
+            ctx.guild
+        )
+        users_balance = int(
+                user_data[3]
+            )
+        if int(balance) + users_balance > 999999999999999999:
+            return
+        else:
+            member = ctx.message.author
+            EconomicCogFunctionality.change_balance(
+                self.cursor,
+                self.conn,
+                ctx.message.author,
+                ctx.guild,
+                balance,
+                user_data
+            )
+            emb = discord.Embed(color = config.EMBED_COLOR, description = f'{member.mention}, вы получили `{balance}`💸 за работу пилотом!')
+            emb.set_footer(text = 'Возобновить данную работу можно через 2 часа!')
+            await ctx.send(embed=emb)
+
+#<<шахтёр------>>
+    @commands.command(aliases = ['Шахтёр', 'Шахтер', 'шахтер'])
+    @commands.cooldown(1, 3600, commands.BucketType.member)
+    async def шахтёр(self, ctx):
+        member = ctx.message.author
+        balance = config.WORKER
+        await ctx.channel.purge(limit=1)
+        user_data = EconomicCogFunctionality.get_user_data(
+            self.cursor,
+            self.conn,
+            ctx.message.author,
+            ctx.guild
+        )
+        users_balance = int(
+                user_data[3]
+            )
+        if int(balance) + users_balance > 999999999999999999:
+            return
+        else:
+            member = ctx.message.author
+            EconomicCogFunctionality.change_balance(
+                self.cursor,
+                self.conn,
+                ctx.message.author,
+                ctx.guild,
+                balance,
+                user_data
+            )
+            emb = discord.Embed(color = config.EMBED_COLOR, description = f'{member.mention}, вы получили `{balance}`💸 за работу шахтёром!')
+            emb.set_footer(text = 'Возобновить данную работу можно через 1 час!')
+            await ctx.send(embed=emb)
+
+#<<работы------->>
+    @commands.command(aliases = ['Работы', 'Работа', 'работа'])
+    async def работы(self, ctx):
+        await ctx.channel.purge(limit=1)
+        prefix = self.get_prefix(self.cursor, ctx.message)
+        emb = discord.Embed(color=config.EMBED_COLOR, title = 'Работы:', description = f'\
+        **Шахтёр**\
+        \n`{prefix}шахтёр`. Зарплата - `{config.WORKER}`. Перерыв - `1 ч`.\
+        \n\
+        \n**Пилот**\
+        \n`{prefix}пилот`. Зарплата - `{config.PILOT}`. Перерыв - `2 ч`.\
+        \n\
+        \n**Доктор**\
+        \n`{prefix}доктор`. Зарплата - `{config.MEDIC}`. Перерыв - `3 ч`.')
+        await ctx.send(embed=emb, components = [
+        [Button(style=ButtonStyle.blue, label = "Работать", emoji='⛏', custom_id = 'Worker'),
+        Button(style=ButtonStyle.blue, label = "Работать", emoji='✈', custom_id = 'Pilot'),
+        Button(style=ButtonStyle.blue, label = "Работать", emoji='⚕', custom_id = 'Medic')]
+        ])
+        response = await self.client.wait_for("button_click", check = lambda message: message.author == ctx.author)
+        if response.channel == ctx.channel:
+            if response.custom_id == "Worker":
+                balance = config.WORKER
+                member = ctx.message.author
+                user_data = EconomicCogFunctionality.get_user_data(
+                    self.cursor,
+                    self.conn,
+                    ctx.message.author,
+                    ctx.guild
+                )
+                users_balance = int(
+                        user_data[3]
+                    )
+                if int(balance) + users_balance > 999999999999999999:
+                    return
+                else:
+                    member = ctx.message.author
+                    EconomicCogFunctionality.change_balance(
+                        self.cursor,
+                        self.conn,
+                        ctx.message.author,
+                        ctx.guild,
+                        balance,
+                        user_data
+                    )
+                    emb = discord.Embed(color = config.EMBED_COLOR, description = f'{member.mention}, вы получили `{balance}`💸 за работу шахтёром!')
+                    emb.set_footer(text = 'Возобновить данную работу можно через 1 час!')
+                    await ctx.send(embed=emb)
+
+            if response.custom_id == "Pilot":
+                balance = config.PILOT
+                member = ctx.message.author
+                user_data = EconomicCogFunctionality.get_user_data(
+                    self.cursor,
+                    self.conn,
+                    ctx.message.author,
+                    ctx.guild
+                )
+                users_balance = int(
+                        user_data[3]
+                    )
+                if int(balance) + users_balance > 999999999999999999:
+                    return
+                else:
+                    member = ctx.message.author
+                    EconomicCogFunctionality.change_balance(
+                        self.cursor,
+                        self.conn,
+                        ctx.message.author,
+                        ctx.guild,
+                        balance,
+                        user_data
+                    )
+                    emb = discord.Embed(color = config.EMBED_COLOR, description = f'{member.mention}, вы получили `{balance}`💸 за работу пилотом!')
+                    emb.set_footer(text = 'Возобновить данную работу можно через 2 часа!')
+                    await ctx.send(embed=emb)
+
+            if response.custom_id == "Medic":
+                balance = config.MEDIC
+                member = ctx.message.author
+                user_data = EconomicCogFunctionality.get_user_data(
+                    self.cursor,
+                    self.conn,
+                    ctx.message.author,
+                    ctx.guild
+                )
+                users_balance = int(
+                        user_data[3]
+                    )
+                if int(balance) + users_balance > 999999999999999999:
+                    return
+                else:
+                    member = ctx.message.author
+                    EconomicCogFunctionality.change_balance(
+                        self.cursor,
+                        self.conn,
+                        ctx.message.author,
+                        ctx.guild,
+                        balance,
+                        user_data
+                    )
+                    emb = discord.Embed(color = config.EMBED_COLOR, description = f'{member.mention}, вы получили `{balance}`💸 за работу врачом!')
+                    emb.set_footer(text = 'Возобновить данную работу можно через 3 часа!')
+                    await ctx.send(embed=emb)      
+
+
+#передать-------------------------------------------------------------------
     @commands.command(aliases = ['Передать', 'передать'])
     async def send_gift(self, ctx, member: discord.Member, cash: int):
         user_data = EconomicCogFunctionality.get_user_data(
@@ -811,7 +853,7 @@ class EconomyCog(commands.Cog):
                 )
             )
             self.conn.commit()
-            emb = discord.Embed(color = config.EMBED_COLOR, description = f'{role.mention} успешно добавлена в магизин сервера!')
+            emb = discord.Embed(color = config.EMBED_COLOR, description = f'{role.mention} успешно добавлена в магизин!\nЦена: `{prise}`')
             await ctx.send(embed = emb)
 
     #измагаза-------------------------------------------------
@@ -832,7 +874,7 @@ class EconomyCog(commands.Cog):
             )
         )
         self.conn.commit()
-        emb = discord.Embed(color = config.EMBED_COLOR, description = f'{role.mention} успешно удалена из магазина сервера!')
+        emb = discord.Embed(color = config.EMBED_COLOR, description = f'{role.mention} успешно удалена из магазина!')
         await ctx.send(embed = emb)
 
     #магаз-------------------------------------------------
@@ -851,7 +893,7 @@ class EconomyCog(commands.Cog):
         data.reverse()
         emb = discord.Embed(color = config.EMBED_COLOR, title="Магазин ролей:")
         for item in data:
-            emb.add_field(name='Роль:', value=f"{ctx.guild.get_role(item[1]).mention} - `{item[2]}` бублика", inline=False)
+            emb.add_field(name='Роль:', value=f"{ctx.guild.get_role(item[1]).mention} - `{item[2]}`", inline=False)
             emb.set_footer(text = f'❓ Купить {prefix}купить @роль')
         await ctx.send(embed = emb)
 
@@ -878,7 +920,7 @@ class EconomyCog(commands.Cog):
         member = ctx.message.author
         if not role_exists:
             await ctx.channel.purge(limit=1)
-            emb = discord.Embed(color=config.EMBED_COLOR_ERROR, title="Произошла ошибка!", description = "Такой роли `нет в магазине`")
+            emb = discord.Embed(color=config.EMBED_COLOR_ERROR, description = "Такой роли `нет в магазине`")
             await ctx.send(embed = emb, delete_after=20)
         else:
             await ctx.channel.purge(limit=1)
@@ -907,4 +949,3 @@ def setup(client):
     :return:
     """
     client.add_cog(EconomyCog(client))
-

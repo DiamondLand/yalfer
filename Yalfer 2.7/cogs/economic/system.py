@@ -17,7 +17,7 @@ class EconomicCogFunctionality:
         data = cursor.fetchone()
         if data is None:
             cursor.execute(
-                "INSERT INTO economic VALUES (?, ?, 0, 0)",
+                "INSERT INTO economic VALUES (?, ?, 0, 0, 0)",
                 (
                     server.id,
                     member.id
@@ -44,6 +44,9 @@ class EconomicCogFunctionality:
         embed.add_field(
             name="В банке:", value=f"{data[2]} 💰"
         )
+        embed.add_field(
+            name="Коины:", value=f"{data[4]} 🪙"
+        )
         await ctx.send(
             embed=embed
         )
@@ -66,6 +69,19 @@ class EconomicCogFunctionality:
             "UPDATE economic SET bank_balance = ? WHERE member_id = ? AND guild_id = ?",
             (
                 user_data[2] + int(balance),
+                member.id,
+                guild.id
+            )
+
+        )
+        conn.commit()
+
+    @staticmethod
+    def change_coin_balance(cursor, conn, member, guild, balance: int, user_data):
+        cursor.execute(
+            "UPDATE economic SET bank_balance = ? WHERE member_id = ? AND guild_id = ?",
+            (
+                user_data[4] + int(balance),
                 member.id,
                 guild.id
             )

@@ -49,7 +49,7 @@ for folder in os.listdir("cogs"):
     for file in os.listdir(f"cogs/{folder}"):
         if file.endswith(".py") and file.startswith("COG_"):
             bot.load_extension(f"cogs.{folder}.{file[:-3]}") 
-            logger.info(f"import \"D:\Yalfer\Yalfer 2.5\cogs/{folder}/{file}\"")
+            logger.info(f"import \"D:\Yalfer\Yalfer 2.7\cogs/{folder}/{file}\"")
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -86,8 +86,7 @@ async def on_command_error(ctx, error):
     if str(error) == "Command raised an exception: AttributeError: 'NoneType' object has no attribute 'channel'":
         await error_send.send_error(ctx, "Вы не в голосовом канале!")
         return
-    if str(error) == "Command raised an exception: TypeError: 'NoneType' object is not subscriptable":
-        await error_send.send_error(ctx, "Не найдено. Повторите попытку")
+    if str(error) == "Command raised an exception: OperationalError: table economic has 4 columns but 5 values were supplied":
         return
     if str(error) == "Command raised an exception: SyntaxError: unexpected EOF while parsing (<string>, line 1)": 
         return 
