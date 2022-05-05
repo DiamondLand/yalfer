@@ -38,15 +38,20 @@ class EconomicCogFunctionality:
             url=member.avatar_url
         )
         embed.add_field(
+            name="Дискорд сервер:",
+            value=ctx.guild.name,
+            inline=False
+        )
+        embed.add_field(
             name="Наличкой:",
             value=f"{data[3]} 💸"
         )
         embed.add_field(
             name="В банке:", value=f"{data[2]} 💰"
         )
-        embed.add_field(
-            name="Коины:", value=f"{data[4]} 🪙"
-        )
+        #embed.add_field(
+            #name="Коины:", value=f"{data[4]} 🪙"
+        #)
         await ctx.send(
             embed=embed
         )
@@ -128,7 +133,7 @@ class MiningCogFunctionality:
         connection.commit()
 
     @staticmethod
-    def add_videocard(videocard, amount, guild, member, cursor, connection):
+    def add_videocard(videocard, guild, member, cursor, connection):
         cursor.execute(
             "SELECT * FROM graphics_cards WHERE guild_id = ? AND member_id = ? AND graphics_cards_name = ?",
             (
@@ -145,7 +150,7 @@ class MiningCogFunctionality:
                     guild.id,
                     member.id,
                     videocard,
-                    amount
+                    1
                 )
             )
         else:
@@ -153,7 +158,7 @@ class MiningCogFunctionality:
                 "UPDATE graphics_cards SET graphics_cards_amount = ? WHERE guild_id = ? AND member_id = ? AND "
                 "graphics_cards_name = ?",
                 (
-                    result[3] + amount,
+                    result[3] + 1,
                     guild.id,
                     member.id,
                     videocard
@@ -161,7 +166,6 @@ class MiningCogFunctionality:
             )
         connection.commit()
         return
-
 
     @staticmethod
     def DB_mining_set(cursor, connection, ctx, value: bool):

@@ -2,6 +2,7 @@ import error_send
 import discord
 import random
 import sqlite3
+import asyncio
 from config import config
 from discord.ext import commands
 from discord_components import DiscordComponents, Button, ButtonStyle, Select, SelectOption
@@ -40,51 +41,61 @@ class Fun(commands.Cog):
             return await ctx.reply(embed=emb, mention_author=False)
         if member:
             emb = discord.Embed(description=f"У нас есть два соперника:\n1. `{ctx.author}`\n2. `{member}`", colour=config.EMBED_COLOR)
-            emb.set_footer(text=f'Выбирает оружие: {ctx.author}')
+            emb.set_footer(text=f'Выбирает оружие: {ctx.author}. У него 10 секунд на поединок!', icon_url = ctx.author.avatar_url)
             await ctx.send(embed = emb,
             components = [
-            Select(
-                placeholder = "Выбери оружие:",
-                options = [
-                    SelectOption(label = "Desert Eagle", value = "Desert Eagle"),
-                    SelectOption(label = "Mauser HSc", value = "Mauser HSc"),
-                    SelectOption(label = "Glock 18", value = "Glock 18"),
-                    SelectOption(label = "Five-seveN", value = "Five-seveN")
-                ]
-            )
-        ])
+                [Button(style=ButtonStyle.blue, label = "Desert Eagle", emoji='💥', custom_id = 'desert_eagle'),
+                Button(style=ButtonStyle.green, label = "Mauser", emoji='🔫', custom_id = 'mauser')]
+            ], delete_after=10),
             while True:
                 variable = [f'`{member}` потерпел поражение\n`{ctx.author}` остался в живых!',
                 f'`{ctx.author}` был застрелен...\n`{member}` остался в живых!',
                 f'`{member}` убежал с поля боя!\nДуэли не будет!',
                 f'У `{member}` осечка!\n`{ctx.author}` остался в живых!',
                 f'У `{ctx.author}` осечка!\n`{member}` остался в живых!']    
-                responce = await self.bot.wait_for("select_option", check = lambda message: message.author == ctx.author)
-                if lambda message: message.author == ctx.author:
-                    emb = discord.Embed(color=config.EMBED_COLOR, title=':cherry_blossom: Итоги поединка:', description = '{}'.format(random.choice(variable)))
-                    emb.set_footer(text=f'Выбирает оружие: {ctx.author}')
-                    await responce.edit_origin(embed = emb)
-                else: 
-                    interaction = emb = discord.Embed(color=config.EMBED_COLOR_ERROR, description = f"Вы не являетесь человеком, запросившем данную команду")
-                    await interaction.ctx.reply(embed=emb, mention_author=False)
+                interaction = response = await self.bot.wait_for("button_click", check = lambda message: message.author == ctx.author)
+                if response.channel == ctx.channel:
+                    if lambda message: message.author == ctx.author:
+                        emb = discord.Embed(color=config.EMBED_COLOR, title=':cherry_blossom: Итоги поединка:', description = '{}'.format(random.choice(variable)))
+                        emb.set_footer(text=f'Выбирает оружие: {ctx.author}', icon_url = ctx.author.avatar_url)
+                        emb.set_thumbnail(url=member.avatar_url)
+                        await ctx.send(embed = emb, delete_after=15)
+                    else: 
+                        interaction = emb = discord.Embed(color=config.EMBED_COLOR_ERROR, description = f"Вы не являетесь человеком, запросившем данную команду")
+                        await interaction.ctx.reply(embed=emb, mention_author=False)
 
 #<<краш--------->>
-    @commands.command(aliases=['Краш'])
+    @commands.command(aliases=['Краш', 'Лузер', 'лузер'])
     async def краш(self, ctx, *, user: discord.Member):
         user = user or ctx.author
         r = random.randint(1, 100)
-        hot = r / 1.17
+        k = random.randint(1, 5)
+        j = random.randint(1, 5)
+        hot = r / k
+        lus = r / j
 
         if hot > 70:
-            emoji = "💞"
+            emoji_love = "💞"
         elif hot > 50:
-            emoji = "💖"
+            emoji_love = "💖"
         elif hot > 25:
-            emoji = "❤"
+            emoji_love = "❤"
         else:
-            emoji = "💔"
+            emoji_love = "💔"
+        
+        if lus > 70:
+            emoji_hate = "🤮"
+        elif lus > 50:
+            emoji_hate = "🙄"
+        elif lus > 25:
+            emoji_hate = "🎭"
+        else:
+            emoji_hate = "🩸"
 
-        await ctx.reply(f"{user.mention} краш на `{hot:.2f}`% {emoji}!")
+        emb = discord.Embed(color=config.EMBED_COLOR, title=f'{user}:', description = f'Краш на `{hot:.2f}`% {emoji_love}!\
+        \nЛузер на `{lus:.2f}`% {emoji_hate}!')
+        emb.set_thumbnail(url=user.avatar_url)
+        await ctx.reply(embed=emb, mention_author=False)
 
 #<<судьба------->>
     @commands.command(aliases = ['Судьба'])

@@ -110,8 +110,13 @@ async def on_command_error(ctx, error):
     if str(error) == "Command raised an exception: HTTPException: 400 Bad Request (error code: 50035): Invalid Form Body In message_reference: Unknown message":
         return
     if str(error) == "Command raised an exception: OverflowError: Python int too large to convert to SQLite INTEGER":
-        await error_send.send_error(ctx, "Слишком большое значение!") 
+        await error_send.send_error(ctx, "Слишком большое значение!")  
         return
+    if str(error) == "Command raised an exception: HTTPException: 400 Bad Request (error code: 50035): Invalid Form Body\nIn message_reference: Unknown message":
+        return 
+    if str(error) == "Command raised an exception: HTTPException: 400 Bad Request (error code: 50006): Cannot send an empty message":
+        return
+        
     emb = discord.Embed(color=config.EMBED_COLOR_ERROR, description = f':no_entry_sign: {error}')
     await ctx.send(embed = emb)
 

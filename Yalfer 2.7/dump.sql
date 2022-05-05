@@ -27,7 +27,6 @@ CREATE TABLE `graphics_cards` (
    `graphics_cards_amount` INT
 );
 
-
 CREATE TABLE `is_mining` (
    `guild_id` INT,
    `member_id` INT,

@@ -1,7 +1,6 @@
 import discord
 import sqlite3
 import asyncio
-import datetime
 from config import config
 from discord.ext import commands
 from discord_components import DiscordComponents, Button, ButtonStyle
@@ -85,6 +84,7 @@ class Admin(commands.Cog):
         """
         await member.add_roles(role)
         embed = discord.Embed(colour=config.EMBED_COLOR, title=f'Изменение у {member}:', description = f'💖 Получена роль - {role.mention}!')
+        embed.set_thumbnail(url=member.avatar_url)
         embed.set_footer(text=f'Выдал: {ctx.author}', icon_url = ctx.author.avatar_url) 
         await ctx.reply(embed=embed, mention_author=False) 
 
@@ -100,7 +100,8 @@ class Admin(commands.Cog):
         """
         await member.remove_roles(role)
         embed = discord.Embed(colour=config.EMBED_COLOR, title=f'Изменение у {member}:', description = f'💔 Изъята роль - {role.mention}!')
-        embed.set_footer(text=f'Изъял: {ctx.author}', icon_url = ctx.author.avatar_url) 
+        embed.set_footer(text=f'Изъял: {ctx.author}', icon_url = ctx.author.avatar_url)
+        embed.set_thumbnail(url=member.avatar_url) 
         await ctx.reply(embed=embed, mention_author=False) 
         
 #<<кик---------->>
@@ -110,6 +111,7 @@ class Admin(commands.Cog):
        await member.kick(reason = reason)
        embed = discord.Embed(colour=config.EMBED_COLOR, title=f'Изгнание {member}:', description = f'💔 Он был кикнут по причине: `{reason}`!')
        embed.set_footer(text=f'Выдал: {ctx.author}', icon_url = ctx.author.avatar_url) 
+       embed.set_thumbnail(url=member.avatar_url)
        await ctx.reply(embed=embed, mention_author=False) 
 
 #<<бан---------->>
@@ -130,7 +132,8 @@ class Admin(commands.Cog):
                 if response.custom_id == "yesban":
                     await member.ban(reason = reason)
                     embed = discord.Embed(colour=config.EMBED_COLOR, title=f'Блокировка {member}:', description = f'💔 Он был забанен по причине: `{reason}`!')
-                    embed.set_footer(text=f'Выдал: {ctx.author}', icon_url = ctx.author.avatar_url) 
+                    embed.set_footer(text=f'Выдал: {ctx.author}', icon_url = ctx.author.avatar_url)
+                    embed.set_thumbnail(url=member.avatar_url) 
                     await ctx.reply(embed=embed, mention_author=False)
                 if response.custom_id == "noban":
                     await ctx.reply("Отмена блокировки!", delete_after = 7)
@@ -146,7 +149,8 @@ class Admin(commands.Cog):
             await ctx.reply(embed=embed, mention_author=False)
         else:
             embed = discord.Embed(colour=config.EMBED_COLOR, title=f'Ограничения для {member}:', description = f'💔 Он был замьючен на `{time}` минут по причине: `{reason}`!')
-            embed.set_footer(text=f'Выдал: {ctx.author}', icon_url = ctx.author.avatar_url) 
+            embed.set_footer(text=f'Выдал: {ctx.author}', icon_url = ctx.author.avatar_url)
+            embed.set_thumbnail(url=member.avatar_url) 
             await ctx.reply(embed=embed, mention_author=False)
             muted_role = discord.utils.get(ctx.message.guild.roles, name="YALFER-MUTED")
             if not muted_role:
@@ -158,7 +162,8 @@ class Admin(commands.Cog):
                 await asyncio.sleep(time*60)
                 await member.remove_roles(muted_role)
                 embed = discord.Embed(colour=config.EMBED_COLOR, title=f'Снятие ограничений с {member}:', description = f'💖 Он был размьючен!')
-                embed.set_footer(text=f'Снял: {config.NAME}') 
+                embed.set_footer(text=f'Снял: {config.NAME}')
+                embed.set_thumbnail(url=member.avatar_url) 
                 await ctx.reply(embed=embed, mention_author=False)
         
 
@@ -170,6 +175,7 @@ class Admin(commands.Cog):
         await member.remove_roles(mutedRole)
         embed = discord.Embed(colour=config.EMBED_COLOR, title=f'Снятие ограничений с {member}:', description = f'💖 Он был размьючен по причине: `{reason}`!')
         embed.set_footer(text = ctx.author.name, icon_url = ctx.author.avatar_url)
+        embed.set_thumbnail(url=member.avatar_url)
         await ctx.reply(embed = embed, mention_author=False)
 
 
@@ -189,6 +195,7 @@ class Admin(commands.Cog):
             self.cursor.execute("INSERT INTO prefixes VALUES (?, ?)", (ctx.guild.id, prefix))
             self.connection.commit()
             embed = discord.Embed(colour=config.EMBED_COLOR, description = f'{author.mention} изменил префикс на `{prefix}`')
+            embed.set_footer(text = ctx.author.name, icon_url = ctx.author.avatar_url)
             await ctx.send(embed = embed)
         else:
             embed = discord.Embed(colour=config.EMBED_COLOR_ERROR, description = f'`{prefix}` не соответствует нормам')

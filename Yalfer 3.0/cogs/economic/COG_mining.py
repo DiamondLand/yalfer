@@ -318,21 +318,26 @@ class MiningCog(commands.Cog):
             emb.set_footer(text=f"❓ Узнать списки видеокарт можно по команде  {prefix}млист")
             await ctx.send(embed = emb, delete_after=15)
         else:
-            #for element in result:
-                #if element[3] > 10:
-                    #await ctx.channel.purge(limit=1)
-                    #emb = discord.Embed(colour=config.EMBED_COLOR_ERROR, description = 'Лимит доступных видеокарт - `10`!')
-                    #await ctx.send(embed = emb, delete_after=15)
-                #else:
-                    MiningCogFunctionality.add_videocard(
-                            ctx.guild,
-                            member,
-                            videocard,
-                            1,
-                            self.cursor,
-                            self.connection,
+            for element in result:
+                if element[3] > 10:
+                    await ctx.channel.purge(limit=1)
+                    emb = discord.Embed(colour=config.EMBED_COLOR_ERROR, description = 'Лимит доступных видеокарт - `10`!')
+                    await ctx.send(embed = emb, delete_after=15)
+                else:
+                    user_data = EconomicCogFunctionality.get_user_data(
+                        self.cursor,
+                        self.connection,
+                        ctx.message.author,
+                        ctx.guild
                     )
-            
+                    server = ctx.guild
+                    MiningCogFunctionality.add_videocard(
+                        videocard,
+                        server,
+                        member,
+                        self.cursor,
+                        self.connection
+                    )
                     emb = discord.Embed(color=config.EMBED_COLOR, description = f'{member.mention} получил `{videocard}`!')
                     await ctx.send(embed = emb)
 

@@ -33,8 +33,8 @@ class Info(commands.Cog):
                 placeholder = "Выберите категорию:",
                 options = [
                     SelectOption(label = "Веселье", value = "Веселье", emoji='✨'),
-                    SelectOption(label = "Экономика", value = "Экономика", emoji='🏆'),
-                    SelectOption(label = "Майнинг", value = "Майнинг", emoji='💹'),
+                    #SelectOption(label = "Экономика", value = "Экономика", emoji='🏆'),
+                    #SelectOption(label = "Майнинг", value = "Майнинг", emoji='💹'),
                     SelectOption(label = "Музыка", value = "Музыка", emoji='📯'),
                     SelectOption(label = "Модерация", value = "Модерация", emoji='📌'),
                     SelectOption(label = "Утилиты", value = "Утилиты", emoji='🔎'),
@@ -46,6 +46,9 @@ class Info(commands.Cog):
         embed1.add_field(name=f"{prefix}дуэль <@Участник>", value="Выбрать оружие и вступить в схватку.", inline=False)
         embed1.add_field(name=f"{prefix}судьба <вопрос>", value="Предсказать свою судьбу.", inline=False)
         embed1.add_field(name=f"{prefix}монетка", value="Перейти в панель игры.", inline=False)
+        embed1.add_field(name=f"{prefix}панда", value="Полюбоваться на панду.", inline=False)
+        embed1.add_field(name=f"{prefix}птица", value="Очароваться птичкой.", inline=False)
+        embed1.add_field(name=f"{prefix}енот", value="Посмотреть на енотика.", inline=False)
 
         embed2 = discord.Embed(title="🏆 Экономика", colour=config.EMBED_COLOR)
         embed2.add_field(name=f"{prefix}баланс [@Участник]", value="Узнать баланс свой/участника.")
@@ -57,7 +60,6 @@ class Info(commands.Cog):
         embed2.add_field(name=f"{prefix}передать <@Участник> <сумма>", value="Поделиться наличкой с участником.")
         embed2.add_field(name=f"{prefix}пожертвовать <сумма>", value="Избавиться от налички.")
         embed2.add_field(name=f"{prefix}казино <сумма>", value="Сыграть в казино.")
-        embed2.add_field(name=f"{prefix}курс", value="Узнать курс для обмена коинов.")
         embed2.add_field(name=f"{prefix}магаз ", value="Магазин сервера.")
         embed2.add_field(name=f"{prefix}купить <@Роль> ", value="Приобрести роль из магазина сервера.")
 
@@ -91,7 +93,6 @@ class Info(commands.Cog):
         embed5.add_field(name=f"{prefix}добавить <@Участник> <сумма>", value="Добавить наличку участнику.")
         embed5.add_field(name=f"{prefix}устбанк <@Участник> <сумма>", value="Установить банковский счёт участнику.")
         embed5.add_field(name=f"{prefix}доббанк <@Участник> <сумма>", value="Добавить на банковский счёт участнику.")
-        embed5.add_field(name=f"{prefix}усткоины <@Участник> <сумма>", value="Установить коины участнику.")
         embed5.add_field(name=f"{prefix}мвыдать <@Участник> <видеокарта>", value="Выдать видеокарту участнику.")
         embed5.add_field(name=f"{prefix}мубрать <@Участник> <видеокарта>", value="Изъять видеокарту у участника.")
         embed5.add_field(name=f"{prefix}вмагаз <@Роль> <цена>", value="Добавить роль в магазин сервера.")
@@ -108,7 +109,7 @@ class Info(commands.Cog):
         embed6.add_field(name=f"{prefix}сервера", value=f"Список серверов, использующих {config.NAME}.", inline=False)
         embed6.add_field(name=f"{prefix}инвайт", value=f"Добавить {config.NAME} на сервер/войти на сервер поддержки.", inline=False)
 
-        #embed7 = discord.Embed(title="💎 Дополнительно", colour=config.EMBED_COLOR)
+        embed7 = discord.Embed(title="💎 Дополнительно", colour=config.EMBED_COLOR)
         
         while True:
             try:
@@ -126,8 +127,8 @@ class Info(commands.Cog):
                     await event.respond(embed = embed5, ephemeral=True)
                 elif label == "Утилиты":
                     await event.respond(embed = embed6, ephemeral=True)
-                #elif label == "Дополнительно":
-                    #await event.respond(embed = embed7, ephemeral=True)
+                elif label == "Дополнительно":
+                    await event.respond(embed = embed7, ephemeral=True)
 
             except discord.NotFound:
                 print("error.")
