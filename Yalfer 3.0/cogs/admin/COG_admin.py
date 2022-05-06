@@ -164,7 +164,7 @@ class Admin(commands.Cog):
                 embed = discord.Embed(colour=config.EMBED_COLOR, title=f'Снятие ограничений с {member}:', description = f'💖 Он был размьючен!')
                 embed.set_footer(text=f'Снял: {config.NAME}#1291')
                 embed.set_thumbnail(url=member.avatar_url) 
-                await ctx.reply(embed=embed, mention_author=False)
+                await ctx.send(embed=embed, mention_author=False)
         
 
 #<<размут------->>

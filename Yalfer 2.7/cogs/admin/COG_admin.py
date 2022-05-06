@@ -24,9 +24,9 @@ class Admin(commands.Cog):
         else:
             return "+"
 #<<очистка-чата>>    
-    @commands.command(aliases = ['Очистить', 'очистить', 'Очист'])
+    @commands.command(aliases = ['Очистить', 'очистить', 'Очист', 'очист'])
     @commands.has_permissions(manage_messages=True)
-    async def очист(self, ctx, amount: int=None):
+    async def clean(self, ctx, amount: int=None):
         if amount == None:
             author = ctx.author
             await ctx.reply(embed = discord.Embed(color=config.EMBED_COLOR, description = f"{author.mention}, вы не указали `число` для очистки.\nХотите очистить `100` сообщений?"),
@@ -53,18 +53,18 @@ class Admin(commands.Cog):
                 await ctx.send(embed = embed, delete_after=5)
 
 #<<объявление--->>
-    @commands.command(aliases = ['Обьявление', 'обьявление', 'Объявление', 'объявление', 'Объява', 'Обьява', 'обьява'])
+    @commands.command(aliases = ['Обьявление', 'обьявление', 'Объявление', 'объявление', 'Объява', 'Обьява', 'объява', 'обьява'])
     @commands.has_permissions(manage_messages=True)
-    async def объява(self, ctx, *, text):
+    async def info(self, ctx, *, text):
         await ctx.channel.purge(limit = 1)
         emb = discord.Embed(color=config.EMBED_COLOR, title="Информация:", url = 'https://discord.com/api/oauth2/authorize?client_id=857936255245484052&permissions=8&scope=bot', description=f'{text}')
         emb.set_footer(text = ctx.author.name, icon_url = ctx.author.avatar_url)
         await ctx.send(embed=emb)
 
 #<<опрос-------->>
-    @commands.command(aliases = ['Опрос'])
+    @commands.command(aliases = ['Опрос', 'опрос'])
     @commands.has_permissions(manage_messages=True)
-    async def опрос(self, ctx, *, text):
+    async def vote(self, ctx, *, text):
         await ctx.channel.purge(limit = 1)
         emb = discord.Embed(title=f'Опрос:', url = 'https://discord.com/api/oauth2/authorize?client_id=857936255245484052&permissions=8&scope=bot', description= f'{text}', colour=config.EMBED_COLOR)
         emb.set_footer(text = ctx.author.name, icon_url = ctx.author.avatar_url)
@@ -73,9 +73,9 @@ class Admin(commands.Cog):
         await message.add_reaction('👎')
 
 #<<роль--------->>
-    @commands.command(aliases = ['Роль'])
+    @commands.command(aliases = ['Роль', 'роль'])
     @commands.has_permissions(manage_roles=True)
-    async def роль(self, ctx, member: discord.Member, role: discord.Role):
+    async def role(self, ctx, member: discord.Member, role: discord.Role):
         """
         :param ctx:
         :param member:
@@ -83,15 +83,15 @@ class Admin(commands.Cog):
         :return:
         """
         await member.add_roles(role)
-        embed = discord.Embed(colour=config.EMBED_COLOR, title=f'Изменение у {member}:', description = f'💖 Получена роль - {role.mention}!')
+        embed = discord.Embed(colour=config.EMBED_COLOR, title=f'Аккаунт {member}:', description = f'💖 Получена роль - {role.mention}!')
         embed.set_thumbnail(url=member.avatar_url)
         embed.set_footer(text=f'Выдал: {ctx.author}', icon_url = ctx.author.avatar_url) 
         await ctx.reply(embed=embed, mention_author=False) 
 
 #<<удалить-роль->>
-    @commands.command(aliases = ['Удроль'])
+    @commands.command(aliases = ['Удроль', 'удроль'])
     @commands.has_permissions(manage_roles=True)
-    async def удроль(self, ctx, member: discord.Member, role: discord.Role):
+    async def dell_role(self, ctx, member: discord.Member, role: discord.Role):
         """
         :param ctx:
         :param member:
@@ -99,15 +99,15 @@ class Admin(commands.Cog):
         :return:
         """
         await member.remove_roles(role)
-        embed = discord.Embed(colour=config.EMBED_COLOR, title=f'Изменение у {member}:', description = f'💔 Изъята роль - {role.mention}!')
+        embed = discord.Embed(colour=config.EMBED_COLOR, title=f'Аккаунт {member}:', description = f'💔 Изъята роль - {role.mention}!')
         embed.set_footer(text=f'Изъял: {ctx.author}', icon_url = ctx.author.avatar_url)
         embed.set_thumbnail(url=member.avatar_url) 
         await ctx.reply(embed=embed, mention_author=False) 
         
 #<<кик---------->>
-    @commands.command(aliases = ['Кик'])
+    @commands.command(aliases = ['Кик', 'кик'])
     @commands.has_permissions(kick_members = True)
-    async def кик(self, ctx, member: discord.Member, *, reason=None): 
+    async def kick(self, ctx, member: discord.Member, *, reason=None): 
        await member.kick(reason = reason)
        embed = discord.Embed(colour=config.EMBED_COLOR, title=f'Изгнание {member}:', description = f'💔 Он был кикнут по причине: `{reason}`!')
        embed.set_footer(text=f'Выдал: {ctx.author}', icon_url = ctx.author.avatar_url) 
@@ -115,9 +115,9 @@ class Admin(commands.Cog):
        await ctx.reply(embed=embed, mention_author=False) 
 
 #<<бан---------->>
-    @commands.command(aliases = ['Бан'])
+    @commands.command(aliases = ['Бан', 'бан'])
     @commands.has_permissions(ban_members = True)
-    async def бан(self, ctx, member: discord.Member, *, reason=None):
+    async def ban(self, ctx, member: discord.Member, *, reason=None):
         author = ctx.message.author
         await ctx.reply(embed = discord.Embed(color=config.EMBED_COLOR, description = f"{author.mention}, Вы уверены в своём решении?\nПоследствия могут быть необратимы!"),
         components = [
@@ -140,12 +140,12 @@ class Admin(commands.Cog):
                 
                 
 #<<мут---------->>
-    @commands.command(aliases = ['Мут', 'Мьют', 'мьют'])
+    @commands.command(aliases = ['Мут', 'мут', 'Мьют', 'мьют'])
     @commands.has_permissions(manage_roles = True)
-    async def мут(self, ctx, member: discord.Member, time: int, *,reason=None):
+    async def mute(self, ctx, member: discord.Member, time: int, *,reason=None):
         guild = ctx.guild
         if time < 1:
-            embed = discord.Embed(description=f"Время не может быть меньше `1 минуты`!", colour=config.EMBED_COLOR_ERROR)
+            embed = discord.Embed(description=f"Время не может быть меньше `1 минуты`!", colour=config.EMBED_COLOR)
             await ctx.reply(embed=embed, mention_author=False)
         else:
             embed = discord.Embed(colour=config.EMBED_COLOR, title=f'Ограничения для {member}:', description = f'💔 Он был замьючен на `{time}` минут по причине: `{reason}`!')
@@ -162,19 +162,19 @@ class Admin(commands.Cog):
                 await asyncio.sleep(time*60)
                 await member.remove_roles(muted_role)
                 embed = discord.Embed(colour=config.EMBED_COLOR, title=f'Снятие ограничений с {member}:', description = f'💖 Он был размьючен!')
-                embed.set_footer(text=f'Снял: {config.NAME}')
+                embed.set_footer(text=f'Снял: {config.NAME}#1291')
                 embed.set_thumbnail(url=member.avatar_url) 
-                await ctx.reply(embed=embed, mention_author=False)
+                await ctx.send(embed=embed, mention_author=False)
         
 
 #<<размут------->>
-    @commands.command(aliases = ['Размут', 'Размьют', 'размьют'])
+    @commands.command(aliases = ['Размут', 'размут', 'Размьют', 'размьют'])
     @commands.has_permissions(manage_roles = True)
-    async def размут(self, ctx, member: discord.Member, *,reason=None):
+    async def unmute(self, ctx, member: discord.Member, *,reason=None):
         mutedRole = discord.utils.get(ctx.guild.roles, name = 'YALFER-MUTED')
         await member.remove_roles(mutedRole)
         embed = discord.Embed(colour=config.EMBED_COLOR, title=f'Снятие ограничений с {member}:', description = f'💖 Он был размьючен по причине: `{reason}`!')
-        embed.set_footer(text = ctx.author.name, icon_url = ctx.author.avatar_url)
+        embed.set_footer(text = f'Снял: {ctx.author.name}', icon_url = ctx.author.avatar_url)
         embed.set_thumbnail(url=member.avatar_url)
         await ctx.reply(embed = embed, mention_author=False)
 
