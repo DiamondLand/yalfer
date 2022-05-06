@@ -17,7 +17,7 @@ class EconomicCogFunctionality:
         data = cursor.fetchone()
         if data is None:
             cursor.execute(
-                "INSERT INTO economic VALUES (?, ?, 0, 0, 0)",
+                "INSERT INTO economic VALUES (?, ?, 0, 0)",
                 (
                     server.id,
                     member.id
@@ -38,20 +38,12 @@ class EconomicCogFunctionality:
             url=member.avatar_url
         )
         embed.add_field(
-            name="Дискорд сервер:",
-            value=ctx.guild.name,
-            inline=False
-        )
-        embed.add_field(
             name="Наличкой:",
             value=f"{data[3]} 💸"
         )
         embed.add_field(
             name="В банке:", value=f"{data[2]} 💰"
         )
-        #embed.add_field(
-            #name="Коины:", value=f"{data[4]} 🪙"
-        #)
         await ctx.send(
             embed=embed
         )
@@ -74,19 +66,6 @@ class EconomicCogFunctionality:
             "UPDATE economic SET bank_balance = ? WHERE member_id = ? AND guild_id = ?",
             (
                 user_data[2] + int(balance),
-                member.id,
-                guild.id
-            )
-
-        )
-        conn.commit()
-
-    @staticmethod
-    def change_coin_balance(cursor, conn, member, guild, balance: int, user_data):
-        cursor.execute(
-            "UPDATE economic SET bank_balance = ? WHERE member_id = ? AND guild_id = ?",
-            (
-                user_data[4] + int(balance),
                 member.id,
                 guild.id
             )
@@ -133,7 +112,7 @@ class MiningCogFunctionality:
         connection.commit()
 
     @staticmethod
-    def add_videocard(videocard, guild, member, cursor, connection):
+    def add_videocard(videocard, amount, guild, member, cursor, connection):
         cursor.execute(
             "SELECT * FROM graphics_cards WHERE guild_id = ? AND member_id = ? AND graphics_cards_name = ?",
             (
@@ -150,7 +129,7 @@ class MiningCogFunctionality:
                     guild.id,
                     member.id,
                     videocard,
-                    1
+                    amount
                 )
             )
         else:
@@ -158,7 +137,7 @@ class MiningCogFunctionality:
                 "UPDATE graphics_cards SET graphics_cards_amount = ? WHERE guild_id = ? AND member_id = ? AND "
                 "graphics_cards_name = ?",
                 (
-                    result[3] + 1,
+                    result[3] + amount,
                     guild.id,
                     member.id,
                     videocard
@@ -166,6 +145,7 @@ class MiningCogFunctionality:
             )
         connection.commit()
         return
+
 
     @staticmethod
     def DB_mining_set(cursor, connection, ctx, value: bool):
