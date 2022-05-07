@@ -6,6 +6,7 @@ import time
 from discord.ext import commands
 from cogs.economic.system import EconomicCogFunctionality
 from cogs.economic.system import MiningCogFunctionality
+from discord_components import DiscordComponents, Button, ButtonStyle, Select, SelectOption
 from config import config
 
 
@@ -55,9 +56,75 @@ class MiningCog(commands.Cog):
 
     @commands.command(aliases = ['Млист', 'млист'])
     async def m_info(self, ctx):
-        await ctx.send(
-            file=discord.File(fp="")
-        )
+        await ctx.send(components = [
+            Select(
+                placeholder = "Выбери видюху:",
+                options = [
+                    SelectOption(label = "rtx 3090", value = "rtx 3090"),
+                    SelectOption(label = "6900 xt", value = "6900 xt"),
+                    SelectOption(label = "rtx 3080", value = "rtx 3080"),
+                    SelectOption(label = "6800 xt", value = "6800 xt"),
+                    SelectOption(label = "rtx 3070", value = "rtx 3070"),
+                    SelectOption(label = "rtx 2080 ti", value = "rtx 2080 ti"),
+                    SelectOption(label = "rtx a6000", value = "rtx a6000"),
+                    SelectOption(label = "rx 6700 xt", value = "rx 6700 xt"),
+                    SelectOption(label = "titan v", value = "titan v"),
+                    SelectOption(label = "rtx 2080", value = "rtx 2080"),
+                    SelectOption(label = "rtx 2070", value = "rtx 2070"),
+                    SelectOption(label = "rx 5700", value = "rx 5700"),
+                    SelectOption(label = "rtx 2060", value = "rtx 2060")
+                ]
+            )
+        ],)
+
+        embed1 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 3090', description = 'Цена видеокарты: `100.000.000`\nВероятность поломки: `12%`\nОценка: `5/5`')
+        embed2 = discord.Embed(colour=config.EMBED_COLOR, title = '6900 xt', description = 'Цена видеокарты: `20.000.000`\nВероятность поломки: `13%`\nОценка: `5/5`')
+        embed3 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 3080', description = 'Цена видеокарты: `10.000.000`\nВероятность поломки: `8%`\nОценка: `5/5`')
+        embed4 = discord.Embed(colour=config.EMBED_COLOR, title = '6800 xt', description = 'Цена видеокарты: `5.000.000`\nВероятность поломки: `17%`\nОценка: `4.5/5`')
+        embed5 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 3070', description = 'Цена видеокарты: `4.000.000`\nВероятность поломки: `20%`\nОценка: `4.2/5`')
+        embed6 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 2080 ti', description = 'Цена видеокарты: `3.500.000`\nВероятность поломки: `9%`\nОценка: `4.2/5`')
+        embed7 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx a6000', description = 'Цена видеокарты: `2.500.000`\nВероятность поломки: `11%`\nОценка: `5/5`')
+        embed8 = discord.Embed(colour=config.EMBED_COLOR, title = 'rx 6700 xt', description = 'Цена видеокарты: `100.000.000`\nВероятность поломки: `2%`\nОценка: `5/5`')
+        embed9 = discord.Embed(colour=config.EMBED_COLOR, title = 'titan v', description = 'Цена видеокарты: `1.500.000`\nВероятность поломки: `14%`\nОценка: `5/5`')
+        embed10 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 2080', description = 'Цена видеокарты: `1.000.000`\nВероятность поломки: `10%`\nОценка: `3.4/5`')
+        embed11 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 2070', description = 'Цена видеокарты: `700.000`\nВероятность поломки: `18%`\nОценка: `3/5`')
+        embed12 = discord.Embed(colour=config.EMBED_COLOR, title = 'rx 5700', description = 'Цена видеокарты: `500.000`\nВероятность поломки: `47%`\nОценка: `2.5/5`')
+        embed13 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 2060', description = 'Цена видеокарты: `220.000`\nВероятность поломки: `50%`\nОценка: `2.5/5`')
+
+        while True:
+            try:
+                event = await self.client.wait_for("select_option", check=None)
+                label = event.values[0]
+                if label == "rtx 3090":
+                    await event.respond(embed = embed1, ephemeral=True)
+                elif label == "6900 xt":
+                    await event.respond(embed = embed2, ephemeral=True)
+                elif label == "rtx 3080":
+                    await event.respond(embed = embed3, ephemeral=True)
+                elif label == "6800 xt":
+                    await event.respond(embed = embed4, ephemeral=True)
+                elif label == "rtx 3070":
+                    await event.respond(embed = embed5, ephemeral=True)
+                elif label == "rtx 2080 ti":
+                    await event.respond(embed = embed6, ephemeral=True)
+                elif label == "rtx a6000":
+                    await event.respond(embed = embed7, ephemeral=True)
+                elif label == "rx 6700 xt":
+                    await event.respond(embed = embed8, ephemeral=True)
+                elif label == "titan v":
+                    await event.respond(embed = embed9, ephemeral=True)
+                elif label == "rtx 2080":
+                    await event.respond(embed = embed10, ephemeral=True)
+                elif label == "rtx 2070":
+                    await event.respond(embed = embed11, ephemeral=True)
+                elif label == "rx 5700":
+                    await event.respond(embed = embed12, ephemeral=True)
+                elif label == "rtx 2060":
+                    await event.respond(embed = embed13, ephemeral=True)
+
+            except discord.NotFound:
+                print("error.")
+
     @commands.command(aliases = ['Мкупить', 'мкупить'])
     async def m_buy(self, ctx, *videocard_words):
         videocard = " ".join(videocard_words)
@@ -362,7 +429,7 @@ class MiningCog(commands.Cog):
             await asyncio.sleep(30)
             if total_time == 60:
                 author = ctx.message.author
-                emb = discord.Embed(colour=config.EMBED_COLOR_ERROR, title="💛 Процесс:", description = f'{author.mention}, сессия была завершена!')
+                emb = discord.Embed(colour=config.EMBED_COLOR_WHAT, title="💛 Процесс:", description = f'{author.mention}, сессия была завершена!')
                 await ctx.send(embed = emb)
                 MiningCogFunctionality.DB_mining_set(
                     ctx=ctx,

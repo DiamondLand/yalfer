@@ -34,7 +34,7 @@ class Info(commands.Cog):
                 options = [
                     SelectOption(label = "Веселье", value = "Веселье", emoji='✨'),
                     SelectOption(label = "Экономика", value = "Экономика", emoji='🏆'),
-                    SelectOption(label = "Майнинг", value = "Майнинг", emoji='💹'),
+                    #SelectOption(label = "Майнинг", value = "Майнинг", emoji='💹'),
                     SelectOption(label = "Музыка", value = "Музыка", emoji='📯'),
                     SelectOption(label = "Модерация", value = "Модерация", emoji='📌'),
                     SelectOption(label = "Утилиты", value = "Утилиты", emoji='🔎'),

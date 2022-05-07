@@ -1,3 +1,5 @@
+from ssl import CHANNEL_BINDING_TYPES
+
 EMBED_COLOR = 0x74d145
 EMBED_COLOR_ERROR = 0xD60062
 EMBED_COLOR_WHAT = 0xFFE800
@@ -16,3 +18,7 @@ JOIN_MSG = ":wave: На связи Yalfer - индивидуальный пом�
     \n - Музыка\
     \n - Утилиты\
     \n - Уровни"
+ROLE = 970064568871157800
+HI_TEXT = '1'
+BYE_TEXT = '1'
+CHANNEL = 1

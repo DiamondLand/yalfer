@@ -1,9 +1,0 @@
-EMBED_COLOR = 0x74d145
-EMBED_COLOR_ERROR = 0xD60062
-VERSION = 2.7
-DEVELOPER = "Diamond#7941 || aleleo#8899"
-NAME = "Yalfer"
-WORKER = 50000
-PILOT = 100000
-MEDIC = 150000
-JOIN_MSG = ":wave: Привеи-привет. Я **Yalfer** - полностью бесплатный и многофункциональный бот, включающий в себя как основные, так и неформальные функции."
