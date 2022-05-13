@@ -33,6 +33,23 @@ class Fun(commands.Cog):
         emb = discord.Embed(color=config.EMBED_COLOR, title = 'Уважение!', description = f"{ctx.author.mention} респектнул *{reason}* {random.choice(hearts)}")
         await ctx.reply(embed=emb, mention_author=False)
 
+#<<секретка----->>
+    @commands.command(aliases = ['хуй', 'Хуй'])
+    async def hui(self, ctx):
+        Stick = ["💦", "🔞", "😛", "💄", "🤫"]
+        Text = ["Какая команда интересная, правда?",
+        "Суетная фича",
+        "Оу ля ля!",
+        "Маленький пошляк!",
+        "И не стыдно такое юзать?!",
+        "Я был другого мнения о тебе...",
+        "Ай ай ай. Аккуратнее!",
+        "Не сейчас, брат.",
+        "Ну ты только посмотри на него!",
+        "Только об одном и думаешь..."]
+        emb = discord.Embed(color=config.EMBED_COLOR, title = f'{ctx.author}:', description = f" {random.choice(Text)} {random.choice(Stick)}")
+        await ctx.reply(embed=emb, mention_author=False)
+
 #<<дуэль------->>
     @commands.command(aliases = ['Дуэль', 'Дуель', 'дуель'])
     async def дуэль(self, ctx, member: discord.Member):

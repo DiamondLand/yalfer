@@ -19,6 +19,14 @@ CREATE TABLE `economic_shop_item` (
     `prise` INT
 );
 
+CREATE TABLE `server_for_members` (
+    `guild_id` INT,
+    `role_id` INT,
+    `channel_id` INT,
+    `hi_text` TEXT,
+    `bye_text` TEXT
+);
+
 CREATE TABLE `graphics_cards` (
    `guild_id` INT,
    `member_id` INT,
@@ -51,12 +59,4 @@ CREATE TABLE `moneys_for_voice_activity` (
 CREATE TABLE `language` (
     `guild_id` INT,
     `language` TEXT
-);
-
-CREATE TABLE `server_for_members` (
-    `guild_id` INT,
-    `channel_id` INT,
-    `role_id` INT,
-    `hi_text` TEXT,
-    `bye_text` TEXT
 );

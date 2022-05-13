@@ -379,7 +379,7 @@ class EconomyCog(commands.Cog):
             await ctx.reply(embed = emb, mention_author=False)
 
     #доктор------------------------------------------------------------------------	
-    @commands.command(aliases = ['Доктор', 'доктор', 'Врач', 'врач', 'Медик', 'медик'])
+    @commands.command(aliases = ['Доктор', 'доктор'])
     @commands.cooldown(1, 10800, commands.BucketType.member)
     async def doctor(self, ctx, balance = config.MEDIC):
         user_data = EconomicCogFunctionality.get_user_data(

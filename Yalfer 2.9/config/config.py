@@ -1,0 +1,11 @@
+EMBED_COLOR = 0x74d145
+EMBED_COLOR_ERROR = 0xD60062
+EMBED_COLOR_WHAT = 0xFFE800
+LIMIT_CARDS = 3
+VERSION = 2.9
+DEVELOPER = "Diamond#7941"
+NAME = "Yalfer"
+WORKER = 50000
+PILOT = 100000
+MEDIC = 150000
+JOIN_MSG = ":wave: Привет-привет. Я **Yalfer** - полностью бесплатный и многофункциональный бот, включающий в себя как основные, так и неформальные функции. Пропиши `+хелп` и ознакомься с ними поближе!"

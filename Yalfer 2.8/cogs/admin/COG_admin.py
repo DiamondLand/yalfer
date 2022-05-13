@@ -138,6 +138,16 @@ class Admin(commands.Cog):
                 if response.custom_id == "noban":
                     await ctx.reply("Отмена блокировки!", delete_after = 7)
                 
+#<<разбан------->>
+    @commands.command(aliases = ['Разбан', 'разбан'])
+    @commands.has_permissions(ban_members = True)
+    async def ban(self, ctx, id: int):
+        user = await self.bot.fetch_user(id)
+        await ctx.guild.unban(user)
+        embed = discord.Embed(colour=config.EMBED_COLOR, title=f'Снятие блокировки с {user}:', description = f'💖 Он был разбанен!')
+        embed.set_thumbnail(url=user.avatar_url) 
+        embed.set_footer(text=f'Снял: {ctx.author}', icon_url = ctx.author.avatar_url)
+        await ctx.reply(embed=embed, mention_author=False)
                 
 #<<мут---------->>
     @commands.command(aliases = ['Мут', 'мут', 'Мьют', 'мьют'])

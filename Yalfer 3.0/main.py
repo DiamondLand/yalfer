@@ -6,6 +6,7 @@ import time
 from loguru import logger
 from discord.ext import commands
 from config import config
+from config import errors
 
 
 def get_prefix(client, message):
@@ -40,6 +41,9 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         command_ = str(error).replace("is not found", "")
         command_ = command_[9:-2]
+        await error_send.send_what(ctx, 
+               f"Такой команды не существует!"
+        )
         return
 
     if isinstance(error, commands.CommandOnCooldown):
@@ -75,7 +79,7 @@ async def on_command_error(ctx, error):
         return
     if isinstance(error, commands.MissingPermissions):
         await error_send.send_error(ctx, 
-                "У вас отсутствуют требуемые разрешения"
+                "У Вас отсутствуют требуемые разрешения!"
         )
         return
     if str(error) == "Command raised an exception: Forbidden: 403 Forbidden (error code: 50013): Missing Permissions":
@@ -83,45 +87,12 @@ async def on_command_error(ctx, error):
             "У вас отсутствуют требуемые разрешения!"
         )
         return
-    if str(error) == "Command raised an exception: AttributeError: 'NoneType' object has no attribute 'channel'":
-        await error_send.send_error(ctx, "Вы не в голосовом канале!")
+    if str(error) in errors.PROCESS_ERROR:
         return
-    if str(error) == "Command raised an exception: TypeError: 'NoneType' object is not subscriptable":
-        await error_send.send_error(ctx, "Не найдено. Повторите попытку")
-        return
-    if str(error) == "Command raised an exception: SyntaxError: unexpected EOF while parsing (<string>, line 1)": 
-        return 
-    if str(error) == "Command raised an exception: HTTPException: 400 Bad Request (error code: 50035): Invalid Form Body In message_reference: Unknown message": 
-        return 
-    if str(error) == "Command raised an exception: NotFound: 404 Not Found (error code: 0): Interaction is unknown (you have already responded to the interaction or responding took too long)": 
-        return 
-    if str(error) == "Command raised an exception: TypeError: argument of type 'NoneType' is not iterable": 
-        return
-    if str(error) == "Command raised an exception: SyntaxError: invalid syntax (<string>, line 1)":
-        return
-    if str(error) == "Command raised an exception: AttributeError: <discord.embeds.Embed object at 0x000001EC2E81A440>":
-        return
-    if str(error) == "returnCommand raised an exception: AttributeError: 'MiningCog' object has no attribute 'get_prefix'":
-        return
-    if str(error) == "Command raised an exception: HTTPException: 400 Bad Request (error code: 50035): Invalid Form Body In message_reference: Unknown message":
-        return
-    if str(error) == "Command raised an exception: TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'":
-        return
-    if str(error) == "Command raised an exception: HTTPException: 400 Bad Request (error code: 40060): Interaction has already been acknowledged.":
-        return
-    if str(error) == "Command raised an exception: NotFound: 404 Not Found (error code: 10008): Unknown Message":
-        return
-    if str(error) == "Command raised an exception: HTTPException: 400 Bad Request (error code: 50035): Invalid Form Body In message_reference: Unknown message":
-        return
-    if str(error) == "Command raised an exception: OverflowError: Python int too large to convert to SQLite INTEGER":
-        await error_send.send_error(ctx, "Слишком большое значение!")  
-        return
-    if str(error) == "Command raised an exception: HTTPException: 400 Bad Request (error code: 50035): Invalid Form Body\nIn message_reference: Unknown message":
-        return 
-    if str(error) == "Command raised an exception: HTTPException: 400 Bad Request (error code: 50006): Cannot send an empty message":
+    if str(error) not in errors.PROCESS_ERROR:
         return
         
-    emb = discord.Embed(color=config.EMBED_COLOR_ERROR, description = f':no_entry_sign: {error}')
+    emb = discord.Embed(color=config.EMBED_COLOR_ERROR, title = '❌ Ошибка:', description = f'{error}')
     await ctx.send(embed = emb)
 
 #Запуск-----------------------------------
