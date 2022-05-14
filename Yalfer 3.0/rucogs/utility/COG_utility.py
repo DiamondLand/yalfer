@@ -79,8 +79,7 @@ class Utility(commands.Cog):
     async def say(self, ctx, *, text):
         await ctx.channel.purge(limit = 1)
         emb = discord.Embed(color=config.EMBED_COLOR, title = '😺 Сказать:', description=f'> {text}')
-        date = datetime.datetime.today()
-        emb.set_footer(icon_url = ctx.author.avatar_url)
+        #emb.set_footer(text = ctx.author.name, icon_url = ctx.author.avatar_url)
         await ctx.send(embed=emb)
 
 #<<аватарка----->>
@@ -107,11 +106,11 @@ class Utility(commands.Cog):
         await ctx.reply(embed=emb, mention_author=False)
     
 #<<инвайт------->>
-    @commands.command(aliases = ['Инвайт', 'инвайт', 'Пригласить', 'пригласить'])
+    @commands.command(aliases = ['Инвайт', 'инвайт', 'Пригласить', 'пригласить', 'поддержка', 'Поддержка'])
     async def invite(self, ctx):
         embed = discord.Embed(color=config.EMBED_COLOR, title = '💚 Добавить', url = 'https://discord.com/api/oauth2/authorize?client_id=857936255245484052&permissions=8&scope=bot', 
         description = f"**{config.NAME}** уже спешит к Вам на сервер!")
-        embed.set_footer(text=f'{config.DEVELOPER} • {config.NAME}  {config.VERSION}')
+        embed.set_footer(text=f'{config.DEVELOPER} • {config.NAME} {config.VERSION}')
         await ctx.reply(embed=embed,
         components = [
             [Button(style=ButtonStyle.URL, label = "Комьюнити", url='https://discord.gg/FBvkhNhcUT'),
@@ -130,6 +129,21 @@ class Utility(commands.Cog):
             Button(style=ButtonStyle.URL, label = "Добавить", url='https://discord.com/api/oauth2/authorize?client_id=857936255245484052&permissions=8&scope=bot')]
         ],
         mention_author=False)
+
+#<<юзер------>>
+    @commands.command(aliases = ['Юзер', 'юзер'])
+    async def user(self, ctx, member :discord.Member = None):
+        if member == None:
+            member = ctx.author
+        else:
+            member = member
+        emb = discord.Embed(title = '✨ Пользовательская информация:', colour = config.EMBED_COLOR)
+        emb.add_field(name = 'Имя:', value = member.display_name, inline = False)
+        emb.add_field(name = "ID:", value = member.id, inline = False)
+        emb.add_field(name = 'Наивысшая роль на сервере:', value = f'{member.top_role.mention}', inline = False)
+        emb.add_field(name = 'Создание аккаунта:', value = member.created_at.strftime('%#d %B %Y, %I:%M %p'), inline = False)
+        emb.set_thumbnail(url = member.avatar_url)
+        await ctx.reply(embed = emb, mention_author = False)
 #<<------------->>
 def setup(bot):
    bot.add_cog(Utility(bot))

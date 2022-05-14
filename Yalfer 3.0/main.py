@@ -5,8 +5,8 @@ import os
 from loguru import logger
 from discord_components import DiscordComponents
 from discord.ext import commands
-from config import config
 from config import errors
+from config import config
 
 
 def get_prefix(client, message):
@@ -90,8 +90,8 @@ async def on_command_error(ctx, error):
         return
     if str(error) in errors.PROCESS_ERROR:
         return
-    if str(error) not in errors.PROCESS_ERROR:
-        return
+    #if str(error) not in errors.PROCESS_ERROR:
+        #return
         
     emb = discord.Embed(color=config.EMBED_COLOR_ERROR, title = '❌ Ошибка:', description = f'{error}')
     await ctx.send(embed = emb)
