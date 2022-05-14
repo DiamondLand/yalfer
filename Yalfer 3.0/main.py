@@ -2,8 +2,8 @@ import discord
 import error_send
 import sqlite3
 import os
-import time
 from loguru import logger
+from discord_components import DiscordComponents
 from discord.ext import commands
 from config import config
 from config import errors
@@ -23,11 +23,13 @@ connection = sqlite3.connect("database.db")
 cursor = connection.cursor()
 bot.logger = logger
 
-for folder in os.listdir("cogs"):
-    for file in os.listdir(f"cogs/{folder}"):
+#https://discord.com/api/oauth2/authorize?client_id=907947130977665084&permissions=8&scope=bot
+
+for folder in os.listdir("rucogs"):
+    for file in os.listdir(f"rucogs/{folder}"):
         if file.endswith(".py") and file.startswith("COG_"):
-            bot.load_extension(f"cogs.{folder}.{file[:-3]}") 
-            logger.info(f"import \"D:\Yalfer\Yalfer 3.0\cogs/{folder}/{file}\"")
+            bot.load_extension(f"rucogs.{folder}.{file[:-3]}") 
+            logger.info(f"import \"Yalfer 3.0/rucogs/{folder}/{file}\"")
 
 bot_commands = list(bot.commands)
 def leadingZero(time: str):
@@ -47,7 +49,6 @@ async def on_command_error(ctx, error):
         return
 
     if isinstance(error, commands.CommandOnCooldown):
-        
         command_ = str(error).replace("You are on cooldown. Try again in", " s")
         command_ = command_[9:-2]
         cd = round(error.retry_after)
@@ -64,7 +65,7 @@ async def on_command_error(ctx, error):
         return
     if isinstance(error, commands.TooManyArguments):
         await error_send.send_error(ctx, 
-                "Слишком много аргументов!"
+                "Вы указали слишком много аргументов!"
         )
         return
     if isinstance(error, commands.MemberNotFound):
@@ -74,7 +75,7 @@ async def on_command_error(ctx, error):
         return
     if isinstance(error, commands.BadArgument):
         await error_send.send_error(ctx, 
-                "Неверный аргумент!"
+                "Вы указали неверный аргумент!"
         )
         return
     if isinstance(error, commands.MissingPermissions):
@@ -84,7 +85,7 @@ async def on_command_error(ctx, error):
         return
     if str(error) == "Command raised an exception: Forbidden: 403 Forbidden (error code: 50013): Missing Permissions":
         await error_send.send_error(ctx, 
-            "У вас отсутствуют требуемые разрешения!"
+            "У Вас отсутствуют требуемые разрешения!"
         )
         return
     if str(error) in errors.PROCESS_ERROR:

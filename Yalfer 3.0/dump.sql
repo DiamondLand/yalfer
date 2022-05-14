@@ -5,7 +5,6 @@ CREATE TABLE `economic` (
     `wallet_balance` INT
 );
 
--- server activity table
 CREATE TABLE `server_activity` (
     `guild_id` INT,
     `member_id` INT,
@@ -13,18 +12,17 @@ CREATE TABLE `server_activity` (
     `user_level` INT
 );
 
+CREATE TABLE `member_stats` (
+    `guild_id` INT,
+    `member_id` INT,
+    `respect` INT,
+    `info` TEXT
+);
+
 CREATE TABLE `economic_shop_item` (
     `guild_id` INT,
     `role_id` INT,
     `prise` INT
-);
-
-CREATE TABLE `server_for_members` (
-    `guild_id` INT,
-    `role_id` INT,
-    `channel_id` INT,
-    `hi_text` TEXT,
-    `bye_text` TEXT
 );
 
 CREATE TABLE `graphics_cards` (
