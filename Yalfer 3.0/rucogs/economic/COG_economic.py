@@ -189,7 +189,7 @@ class EconomyCog(commands.Cog):
                         user_data
                     )
                     emb = discord.Embed(color = config.EMBED_COLOR, title=f'📛 Кража:', description = f'Попытка кражи у {member.mention}:\
-                    \n> **Удачно!** (`{balance}`)')
+                    \n> **Удачно!** (`{balance}` 💸)')
                     await ctx.reply(embed = emb, mention_author=False)
                 else:
                     emb = discord.Embed(color = config.EMBED_COLOR, title=f'📛 Кража:', description = f'Попытка кражи у {member.mention}:\
@@ -221,7 +221,7 @@ class EconomyCog(commands.Cog):
                 )
             )
             self.conn.commit()
-            emb = discord.Embed(color = config.EMBED_COLOR, title=f'💰 Банк пользователя:', description = f'> Установлено: `{balance}` 💸 для {member.mention}!')
+            emb = discord.Embed(color = config.EMBED_COLOR, title=f'💰 Банк пользователя:', description = f'> Установлено: `{balance}` 💸 • **{member}**!')
             emb.set_footer(text = ctx.author.name, icon_url = ctx.author.avatar_url)
             await ctx.reply(embed = emb, mention_author=False)
 
@@ -263,7 +263,7 @@ class EconomyCog(commands.Cog):
                     balance,
                     user_data
                 )
-                emb = discord.Embed(color = config.EMBED_COLOR, title=f'💰 Банк пользователя:', description = f'> Добавлено: `{balance}` 💸 для {member.mention}!')
+                emb = discord.Embed(color = config.EMBED_COLOR, title=f'💰 Банк пользователя:', description = f'> Добавлено: `{balance}` 💸 • **{member}**!')
                 emb.set_footer(text = ctx.author.name, icon_url = ctx.author.avatar_url)
                 await ctx.reply(embed = emb, mention_author=False)
 
@@ -295,7 +295,7 @@ class EconomyCog(commands.Cog):
                     )
                 )
                 self.conn.commit()
-                emb = discord.Embed(color = config.EMBED_COLOR, title=f'💰 Баланс пользователя:', description = f'> Установлено: `{balance}` 💸 для {member.mention}!')
+                emb = discord.Embed(color = config.EMBED_COLOR, title=f'💰 Баланс пользователя:', description = f'> Установлено: `{balance}` 💸 • **{member}**!')
             emb.set_footer(text = ctx.author.name, icon_url = ctx.author.avatar_url)
             await ctx.reply(embed = emb, mention_author=False)
 
@@ -340,14 +340,14 @@ class EconomyCog(commands.Cog):
                     balance,
                     user_data
                 )
-                emb = discord.Embed(color = config.EMBED_COLOR, title=f'💰 Баланс пользователя:', description = f'> Добавлено: `{balance}` 💸 для {member.mention}!')
+                emb = discord.Embed(color = config.EMBED_COLOR, title=f'💰 Баланс пользователя:', description = f'> Добавлено: `{balance}` 💸 • **{member}**!')
                 emb.set_footer(text = ctx.author.name, icon_url = ctx.author.avatar_url)
                 await ctx.reply(embed = emb, mention_author=False)
       
     #бонус---------------------------------------------------------------------
     @commands.command(aliases = ['Бонус', 'бонус'])
     @commands.cooldown(1, 3600, commands.BucketType.member)
-    async def bonus(self, ctx, balance = 5000):
+    async def bonus(self, ctx, balance = config.BONUS):
         user_data = EconomicCogFunctionality.get_user_data(
             self.cursor,
             self.conn,
@@ -376,7 +376,7 @@ class EconomyCog(commands.Cog):
                 balance,
                 user_data
             )
-            emb = discord.Embed(color = config.EMBED_COLOR, title=f'🎀 Бонус:', description = f'> Добавлено: `{balance}` 💸 для {member.mention}!')
+            emb = discord.Embed(color = config.EMBED_COLOR, title=f'🎀 Бонус:', description = f'> Добавлено: `{balance}` 💸 • **{member}**!')
             emb.set_footer(text = 'Вы сможете вновь забрать бонус через 1 час!')
             await ctx.reply(embed = emb, mention_author=False)
 
@@ -412,7 +412,7 @@ class EconomyCog(commands.Cog):
                 balance,
                 user_data
             )
-            emb = discord.Embed(color = config.EMBED_COLOR, title=f'🦺 Работа:', description = f'> Добавлено: `{balance}` 💸 для {member.mention}!')
+            emb = discord.Embed(color = config.EMBED_COLOR, title=f'🦺 Работа:', description = f'> Добавлено: `{balance}` 💸 • **{member}**!')
             emb.set_footer(text = 'Информацию о зарплатах и перерывах можно узнать в разделе экономики!')
             await ctx.reply(embed = emb, mention_author=False)
 
@@ -449,7 +449,7 @@ class EconomyCog(commands.Cog):
                 balance,
                 user_data
             )
-            emb = discord.Embed(color = config.EMBED_COLOR, title=f'🦺 Работа:', description = f'> Добавлено: `{balance}` 💸 для {member.mention}!')
+            emb = discord.Embed(color = config.EMBED_COLOR, title=f'🦺 Работа:', description = f'> Добавлено: `{balance}` 💸 • **{member}**!')
             emb.set_footer(text = 'Информацию о зарплатах и перерывах можно узнать в разделе экономики!')
             await ctx.reply(embed = emb, mention_author=False)
 
@@ -486,14 +486,14 @@ class EconomyCog(commands.Cog):
                 balance,
                 user_data
             )
-            emb = discord.Embed(color = config.EMBED_COLOR, title=f'🦺 Работа:', description = f'> Добавлено: `{balance}` 💸 для {member.mention}!')
+            emb = discord.Embed(color = config.EMBED_COLOR, title=f'🦺 Работа:', description = f'> Добавлено: `{balance}` 💸 • **{member}**!')
             emb.set_footer(text = 'Информацию о зарплатах и перерывах можно узнать в разделе экономики!')
             await ctx.reply(embed = emb, mention_author=False)
 
 
     #передать-------------------------------------------------------------------
     @commands.command(aliases = ['Передать', 'передать'])
-    async def send_gift(self, ctx, member: discord.Member, cash: int):
+    async def send_gift(self, ctx, member: discord.Member, balance: int):
         user_data = EconomicCogFunctionality.get_user_data(
             self.cursor,
             self.conn,
@@ -503,14 +503,14 @@ class EconomyCog(commands.Cog):
         users_balance = int(
                 user_data[3]
             )
-        if int(cash) + users_balance > 999999999999999999:
+        if int(balance) + users_balance > 999999999999999999:
             emb = discord.Embed(colour=config.EMBED_COLOR_ERROR, title="💛 Нет, нет, нет!", description = 'Давай не так много, окей?')
             await ctx.reply(embed = emb, mention_author=False)
         else:
             """
             :param ctx:
             :param member:
-            :param cash:
+            :param balance:
             :return:
             """
             user_data = EconomicCogFunctionality.get_user_data(
@@ -530,18 +530,18 @@ class EconomyCog(commands.Cog):
             users_balance = int(
                 user_data[3]
             )
-            if int(cash) <= 0:
+            if int(balance) <= 0:
                 emb = discord.Embed(colour=config.EMBED_COLOR_ERROR, title="❌ Ошибка:", description = 'Сумма ввода должна быть больше чем `0`!')
                 await ctx.reply(embed = emb, mention_author=False)
             else:
-                if int(cash) > users_balance:
+                if int(balance) > users_balance:
                     emb = discord.Embed(colour=config.EMBED_COLOR_ERROR, title="❌ Ошибка:", description = f'У Вас недостаточно средств!')
                     await ctx.reply(embed = emb, mention_author=False)
                 else:
                     self.cursor.execute(
                         "UPDATE economic SET wallet_balance = ? WHERE member_id = ? AND guild_id = ?",
                         (
-                            users_balance - int(cash),
+                            users_balance - int(balance),
                             ctx.message.author.id,
                             ctx.guild.id
                         )
@@ -549,20 +549,19 @@ class EconomyCog(commands.Cog):
                     self.cursor.execute(
                         "UPDATE economic SET wallet_balance = ? WHERE member_id = ? AND guild_id = ?",
                         (
-                            getter_balance + int(cash),
+                            getter_balance + int(balance),
                             member.id,
                             ctx.guild.id
                         )
                     )
                     self.conn.commit()
-                    emb = discord.Embed(color = config.EMBED_COLOR, title=f'🎁 Передача средств:', description = f'> Добавлено: `{cash}` 💸 для {member.mention}!')
+                    emb = discord.Embed(color = config.EMBED_COLOR, title=f'🎁 Передача средств:', description = f'> Добавлено: `{balance}` 💸 • **{member}**!')
                     emb.set_footer(text = ctx.author.name, icon_url = ctx.author.avatar_url)
                     await ctx.reply(embed = emb, mention_author=False)
 
 
     #казино-------------------------------------------------
     @commands.command(aliases=["Казино", "казино", 'Ставка', 'ставка'])
-    @commands.cooldown(2, 13, commands.BucketType.member)
     async def slot(self, ctx, balance: int):
         """
         :param ctx:

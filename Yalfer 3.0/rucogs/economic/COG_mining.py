@@ -15,27 +15,27 @@ class MiningCog(commands.Cog):
     def __init__(self, client):
         self.client = client
         self.prises = {
-            "rtx 3090": "65000000",
-            "rtx 3080": "55000000",
-            "6800 xt": "35000000",
-            "rtx 3070": "15000000",
-            "rtx 2080 ti": "9000000",
-            "rtx a6000": "4000000",
-            "rx 6700 xt": "1000000",
-            "titan v": "700000",
-            "rtx 2080": "500000"
+            "rtx 3090": "3100000",
+            "rtx 3080": "2700000",
+            "6800 xt": "1600000",
+            "rtx 3070": "830000",
+            "rtx 2080 ti": "660000",
+            "rtx a6000": "450000",
+            "rx 6700 xt": "250000",
+            "titan v": "190000",
+            "rtx 2080": "120000"
             }
 
         self.moneys_ = {
-            "rtx 3090": "65000000",
-            "rtx 3080": "55000000",
-            "6800 xt": "35000000",
-            "rtx 3070": "15000000",
-            "rtx 2080 ti": "9000000",
-            "rtx a6000": "4000000",
-            "rx 6700 xt": "1000000",
-            "titan v": "700000",
-            "rtx 2080": "500000"
+            "rtx 3090": "2197641",
+            "rtx 3080": "1063818",
+            "6800 xt": "810201",
+            "rtx 3070": "613516",
+            "rtx 2080 ti": "445031",
+            "rtx a6000": "241041",
+            "rx 6700 xt": "147244",
+            "titan v": "70141",
+            "rtx 2080": "50845"
             }
         self.chances_to_broke = [
             8, 10, 11, 7, 12, 17, 37, 3, 45
@@ -62,15 +62,15 @@ class MiningCog(commands.Cog):
             )
         ],)
 
-        embed1 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 3090', description = 'Цена видеокарты: `65.000.000`\nВероятность поломки: `8%`\nОценка: `5/5`')
-        embed2 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 3080', description = 'Цена видеокарты: `55.000.000`\nВероятность поломки: `10%`\nОценка: `5/5`')
-        embed3 = discord.Embed(colour=config.EMBED_COLOR, title = '6800 xt', description = 'Цена видеокарты: `35.000.000`\nВероятность поломки: `1%`\nОценка: `5/5`')
-        embed4 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 3070', description = 'Цена видеокарты: `15.000.000`\nВероятность поломки: `7%`\nОценка: `4.4/5`')
-        embed5 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 2080 ti', description = 'Цена видеокарты: `9.000.000`\nВероятность поломки: `12%`\nОценка: `4/5`')
-        embed6 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx a6000', description = 'Цена видеокарты: `4.000.000`\nВероятность поломки: `17%`\nОценка: `4/5`')
-        embed7 = discord.Embed(colour=config.EMBED_COLOR, title = 'rx 6700 xt', description = 'Цена видеокарты: `1.000.000`\nВероятность поломки: `37%`\nОценка: `3.5/5`')
-        embed8 = discord.Embed(colour=config.EMBED_COLOR, title = 'titan v', description = 'Цена видеокарты: `700.000`\nВероятность поломки: `3%`\nОценка: `5/5`')
-        embed9 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 2080', description = 'Цена видеокарты: `500.000`\nВероятность поломки: `45%`\nОценка: `2/5`')
+        embed1 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 3090', description = 'Цена видеокарты: `4.100.000`\nВероятность поломки: `8%`\nОценка: `5/5`')
+        embed2 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 3080', description = 'Цена видеокарты: `2.700.000`\nВероятность поломки: `10%`\nОценка: `5/5`')
+        embed3 = discord.Embed(colour=config.EMBED_COLOR, title = '6800 xt', description = 'Цена видеокарты: `1.600.000`\nВероятность поломки: `1%`\nОценка: `5/5`')
+        embed4 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 3070', description = 'Цена видеокарты: `830.000`\nВероятность поломки: `7%`\nОценка: `4.4/5`')
+        embed5 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 2080 ti', description = 'Цена видеокарты: `660.000`\nВероятность поломки: `12%`\nОценка: `4/5`')
+        embed6 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx a6000', description = 'Цена видеокарты: `450.000`\nВероятность поломки: `17%`\nОценка: `4/5`')
+        embed7 = discord.Embed(colour=config.EMBED_COLOR, title = 'rx 6700 xt', description = 'Цена видеокарты: `250.000`\nВероятность поломки: `37%`\nОценка: `3.5/5`')
+        embed8 = discord.Embed(colour=config.EMBED_COLOR, title = 'titan v', description = 'Цена видеокарты: `190.000`\nВероятность поломки: `3%`\nОценка: `5/5`')
+        embed9 = discord.Embed(colour=config.EMBED_COLOR, title = 'rtx 2080', description = 'Цена видеокарты: `120.000`\nВероятность поломки: `45%`\nОценка: `2/5`')
 
         while True:
             try:
@@ -156,7 +156,8 @@ class MiningCog(commands.Cog):
                         - prise,
                         user_data
                     )
-                    emb = discord.Embed(colour=config.EMBED_COLOR, title=f"Аккаунт {ctx.author}:", description = f'💖 Приобрёл `{videocard}`!')
+                    emb = discord.Embed(colour=config.EMBED_COLOR, title=f"🛒 Майнинг ферма:", description = f'> Покупка `{videocard}` • `{prise}` 💸!')
+                    emb.set_footer(text = ctx.author.name, icon_url = ctx.author.avatar_url)
                     await ctx.reply(embed = emb, mention_author=False)
 
     @commands.command(aliases = ['Мпродать', 'мпродать'])
@@ -217,7 +218,8 @@ class MiningCog(commands.Cog):
                         + prise,
                         user_data
                 )
-                emb = discord.Embed(colour=config.EMBED_COLOR, title=f"Аккаунт {ctx.author}:", description = f'💖 Продал `{videocard}` за `{prise}`!')
+                emb = discord.Embed(colour=config.EMBED_COLOR, title=f"🛒 Майнинг ферма:", description = f'> Продажа `{videocard}` • `{prise}` 💸!')
+                emb.set_footer(text = ctx.author.name, icon_url = ctx.author.avatar_url)
                 await ctx.reply(embed = emb, mention_author=False)
             
     @commands.has_permissions(administrator=True)
@@ -242,7 +244,8 @@ class MiningCog(commands.Cog):
                     self.connection
                 )
             
-            emb = discord.Embed(colour=config.EMBED_COLOR, title=f"Аккаунт {member}:", description = f'💔 Лишается `{videocard}`!')
+            emb = discord.Embed(colour=config.EMBED_COLOR, title=f"🛒 Майнинг ферма:", description = f'> Изъятие `{videocard}` • **{member}**!')
+            emb.set_footer(text = ctx.author.name, icon_url = ctx.author.avatar_url)
             await ctx.reply(embed = emb, mention_author=False)
 
     @commands.has_permissions(administrator=True)
@@ -283,7 +286,8 @@ class MiningCog(commands.Cog):
                     self.cursor,
                     self.connection,
                 )      
-                emb = discord.Embed(colour=config.EMBED_COLOR, title=f"Аккаунт {member}:", description = f'💖 Получил `{videocard}`!')
+                emb = discord.Embed(colour=config.EMBED_COLOR, title=f"🛒 Майнинг ферма:", description = f'> Выдача `{videocard}` • **{member}**!')
+                emb.set_footer(text = ctx.author.name, icon_url = ctx.author.avatar_url)
                 await ctx.reply(embed = emb, mention_author=False)
 
     @commands.command(aliases = ['Мферма', 'мферма'])
@@ -301,6 +305,7 @@ class MiningCog(commands.Cog):
             description=f"**Майнинг ферма** {author.mention}**:**",
             color=config.EMBED_COLOR
         )
+        
         for element in result:
             if element[3] != 0:
                 embed.add_field(
@@ -310,7 +315,7 @@ class MiningCog(commands.Cog):
         await ctx.reply(embed=embed, mention_author=False)
 
     @commands.command(aliases = ['Мстарт', 'мстарт'])
-    @commands.cooldown(1, 540, commands.BucketType.member)
+    @commands.cooldown(1, 630, commands.BucketType.member)
     async def m_start(self, ctx):
         self.cursor.execute("SELECT * FROM is_mining WHERE guild_id = ? AND member_id = ?", (ctx.guild.id, ctx.message.author.id))
         is_mining_data = self.cursor.fetchone()
@@ -379,7 +384,7 @@ class MiningCog(commands.Cog):
                     msg = ""
                     mined_moneys_for_one = int(
                         self.moneys_[element[2]]
-                    ) / (3 * 10 * 9) * random.randint(1, 15) * element[3]
+                    ) / (2 * 8 * 2) * random.randint(1, 12) * element[3]
                     mined_moneys += mined_moneys_for_one
                     msg += f"Кэш: `{round(mined_moneys_for_one, 2)}`, растёт каждые *30* секунд!\n"
                     chances_to_broke = int(
@@ -409,7 +414,7 @@ class MiningCog(commands.Cog):
                         value=f"{msg}"
                     )
                     embed.set_footer(
-                        text=f"\n💎 Налог - {round(mined_moneys / 4, 2)} 💰\n💡 Счет за электричество - {round(mined_moneys / 8, 2)} 💰"
+                        text=f"\n💎 Налог - {round(mined_moneys / 1, 2)} 💰\n💡 Счет за электричество - {round(mined_moneys / 2, 2)} 💰"
                     )
             users_balance = int(
                 user_data[3]
@@ -434,7 +439,7 @@ class MiningCog(commands.Cog):
                 )
             total_time += 30
             await asyncio.sleep(30)
-            if total_time == 60:
+            if total_time == 90:
                 author = ctx.message.author
                 emb = discord.Embed(colour=config.EMBED_COLOR_WHAT, title="💛 Процесс:", description = f'{author.mention}, сессия была завершена!')
                 await ctx.send(embed = emb)
