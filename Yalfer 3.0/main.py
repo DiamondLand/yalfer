@@ -23,8 +23,6 @@ connection = sqlite3.connect("database.db")
 cursor = connection.cursor()
 bot.logger = logger
 
-#https://discord.com/api/oauth2/authorize?client_id=907947130977665084&permissions=8&scope=bot
-
 for folder in os.listdir("rucogs"):
     for file in os.listdir(f"rucogs/{folder}"):
         if file.endswith(".py") and file.startswith("COG_"):
@@ -41,11 +39,6 @@ def leadingZero(time: str):
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
-        command_ = str(error).replace("is not found", "")
-        command_ = command_[9:-2]
-        await error_send.send_what(ctx, 
-               f"Такой команды не существует!"
-        )
         return
 
     if isinstance(error, commands.CommandOnCooldown):

@@ -115,6 +115,43 @@ class Admin(commands.Cog):
         embed.set_thumbnail(url=member.avatar_url)
         await ctx.reply(embed=embed, mention_author=False) 
 
+#<<банлист------>>        
+    @commands.command(aliases = ['Баны', 'баны', 'Банлист', 'банлист'])
+    @commands.has_permissions(ban_members=True)
+    async def bans(self, ctx):
+        page = 1
+        bans = await ctx.guild.bans()
+
+        def check(reaction, user):
+            return user != self.client.user
+        message = None
+        
+        while True:
+            embed = discord.Embed(title=f"🚩 Бан-лист:", color=config.EMBED_COLOR)
+            for ban_entry in bans[(page-1)*10:page*10]:
+                embed.add_field(name=f"*{ban_entry.user}*", value=f"> Причина: **{ban_entry.reason}**")
+            if message == None:        
+                message = await ctx.reply(embed=embed, mention_author=False)
+            else:
+                await message.edit(embed=embed)
+            if len(bans) > 10 and not page*10 - len(bans) <= 10:
+                await message.add_reaction("◀️")
+                await message.add_reaction("▶️")
+                try:
+                    reaction, user = await self.client.wait_for('reaction_add', timeout=30.0, check=check)
+                except asyncio.TimeoutError:
+                    await message.clear_reaction("◀️")
+                    await message.clear_reaction("▶️")
+                    break
+                if str(reaction) == "▶️":
+                    page += 1
+                elif str(reaction) == "◀️" and page > 1:
+                    page -= 1
+                else:
+                    pass
+            else:
+                break
+
 #<<разбан------->>
     @commands.command(aliases = ['Разбан', 'разбан'])
     @commands.has_permissions(ban_members = True)

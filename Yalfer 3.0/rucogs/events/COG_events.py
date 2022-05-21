@@ -57,6 +57,11 @@ class Events(commands.Cog):
         if to_send:
             embed = discord.Embed(color=config.EMBED_COLOR, description = join_msg) 
             await  to_send.send(embed=embed)
+
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        if message.author.bot:
+            return
 '''    
     @commands.has_permissions(administrator=True)
     @commands.command(aliases = ['Добавитьроль', 'добавитьроль'])
