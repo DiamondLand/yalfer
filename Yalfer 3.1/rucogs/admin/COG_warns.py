@@ -28,7 +28,7 @@ class Warns(commands.Cog):
 
     @commands.has_permissions(manage_messages=True)
     @commands.command(aliases = ['Варн', 'варн', 'Пред', 'пред'])
-    async def warn(self, ctx, user: discord.Member = None, *, reason='Не указана'):
+    async def warn(self, ctx, user: discord.Member, *, reason='Не указана'):
         server_id = ctx.guild
         file_path = f"warnings/{server_id}.json"
         if not os.path.exists(file_path):
@@ -67,7 +67,7 @@ class Warns(commands.Cog):
 
     @commands.has_permissions(manage_messages=True)
     @commands.command(aliases = ['Варны', 'варны', 'Преды', 'преды'])
-    async def warns(self, ctx, user: discord.Member = None):
+    async def warns(self, ctx, user: discord.Member):
         server_id = ctx.guild
         file_path = f"warnings/{server_id}.json"
         if not os.path.exists(file_path):
@@ -94,7 +94,7 @@ class Warns(commands.Cog):
 
     @commands.has_permissions(manage_messages=True)
     @commands.command(aliases = ['удалварн', 'Удалварн', 'удалпред', 'Удалпред'])
-    async def clear_warnings(self, ctx, user: discord.Member=None):
+    async def clear_warnings(self, ctx, user: discord.Member):
         server_id = ctx.guild
         file_path = f"warnings/{server_id}.json"
         if not os.path.exists(file_path):

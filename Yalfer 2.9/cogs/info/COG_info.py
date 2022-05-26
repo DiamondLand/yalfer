@@ -26,7 +26,7 @@ class Info(commands.Cog):
     @commands.command(aliases = ['Хелп', 'хелп', 'Помощь', 'помощь', 'Команды', 'команды'])
     async def help(self, ctx):
         prefix = self.get_prefix(self.cursor, ctx.message)
-        emb = discord.Embed(title = "Меню помощи:", description=f"**Yalfer** - полностью бесплатный и многофункциональный бот, включающий в себя как основные, так и неформальные функции.\n\n*< >* - обязательный аргумент.\n*[ ]* - дополнительный аргумент.\n", colour=config.EMBED_COLOR)
+        emb = discord.Embed(title = "Меню помощи:", description=f"**{config.NAME}** - полностью бесплатный и многофункциональный бот, включающий в себя как основные, так и неформальные функции.\n\n*< >* - обязательный аргумент.\n*[ ]* - дополнительный аргумент.\n", colour=config.EMBED_COLOR)
         emb.set_footer(text=f'{config.DEVELOPER}')
         await ctx.reply(embed = emb, components = [
             Select(
